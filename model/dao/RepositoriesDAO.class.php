@@ -13,5 +13,10 @@ interface RepositoriesDAO{
 	*/
 	public function queryAll();
 	
+	/**
+	 * Returns the repository with param as ID 
+	 */
+	public function load($id);
+	
 }
 ?>

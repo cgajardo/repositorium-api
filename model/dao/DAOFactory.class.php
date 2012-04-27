@@ -13,6 +13,13 @@ class DAOFactory{
 	public static function getRepositoriesDAO(){
 		return new RepositoriesMySqlDAO();
 	}
+	
+	/**
+	 * @return UsersDAO
+	 */
+	public static function getUsersDAO(){
+		return new UsersMySqlDAO();
+	}
 
 
 }

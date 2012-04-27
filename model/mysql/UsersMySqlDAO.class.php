@@ -2,24 +2,29 @@
 /**
  * 
  * @author: cgajardo
- * @date: 2012-04-20 00:52
+ * @date: 2012-04-26 23:35
  */
-class RepositoriesMySqlDAO implements RepositoriesDAO{
+class UsersMySqlDAO implements UsersDAO{
 
 /** Public functions **/
 	
 	public function load($id){
-		$sql = "SELECT id, name, description, user_id, active FROM repositories WHERE id = ?";
+		$sql = "SELECT email, first_name, last_name FROM users WHERE id = ?";
 		$sqlQuery = new SqlQuery($sql);
 		
 		$sqlQuery->setNumber($id);
 		
 		return $this->getRow($sqlQuery);
 	}
-
-	public function queryAll(){
-		$sql = "SELECT id, name, description, user_id, active FROM repositories";
+	
+	public function getByRepositoryId($id){
+		$sql = "SELECT u.email, u.first_name, u.last_name 
+				FROM users AS u JOIN repositories_users AS ru ON ru.user_id = u.id 
+				WHERE ru.repository_id = ?";
+		
 		$sqlQuery = new SqlQuery($sql);
+		
+		$sqlQuery->setNumber($id);
 		
 		return $this->getList($sqlQuery);
 	}
@@ -30,18 +35,16 @@ class RepositoriesMySqlDAO implements RepositoriesDAO{
 	/**
 	 * Read row
 	 *
-	 * @return Repository
+	 * @return User
 	 */
 	protected function readRow($row){
-		$repository = new Repository();
+		$user = new User();
 		
-		$repository->id = $row['id'];
-		$repository->name = $row['name'];
-		$repository->description = $row['description'];
-		$repository->author = DAOFactory::getUsersDAO()->load($row['user_id']);
-		$repository->active = $row['active'];
+		$user->email = $row['email'];
+		$user->name =  $row['first_name'];
+		$user->lastname = $row['last_name'];
 
-		return $repository;
+		return $user;
 	}
 	
 	protected function getList($sqlQuery){
