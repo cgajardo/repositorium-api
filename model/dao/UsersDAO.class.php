@@ -8,17 +8,22 @@
 interface UsersDAO{
 	
 	/**
-	* Returns an User with ID = $id
+	* Returns user data by id column
 	*/
 	public function load($id);
 	
 	
 	/**
-	 * Return a list of users participating in one repository
-	 *  
+	 * Returns a list of users participating in one repository
 	 * @param int $id
 	 */
 	public function getByRepositoryId($id);
+	
+	/**
+	 * Returns user data by email address
+	 * @param String $email
+	 */
+	public function queryByEmail($email);
 	
 }
 ?>

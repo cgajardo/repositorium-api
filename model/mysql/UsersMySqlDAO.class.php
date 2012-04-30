@@ -8,8 +8,19 @@ class UsersMySqlDAO implements UsersDAO{
 
 /** Public functions **/
 	
+	public function updatePassword($email, $password){
+		//TODO: averiguar c—mo funciona el tema del SALT
+		$sql = "UPDATE users SET password = ? WHERE email = ?";
+		$sqlQuery = new SqlQuery($sql);
+		
+		$sqlQuery->setString($email);
+		$sqlQuery->setString($password);
+		
+		return $this->execute($sqlQuery);
+	}
+	
 	public function load($id){
-		$sql = "SELECT email, first_name, last_name FROM users WHERE id = ?";
+		$sql = "SELECT email, first_name, last_name, created, active FROM users WHERE id = ?";
 		$sqlQuery = new SqlQuery($sql);
 		
 		$sqlQuery->setNumber($id);
@@ -17,8 +28,17 @@ class UsersMySqlDAO implements UsersDAO{
 		return $this->getRow($sqlQuery);
 	}
 	
+	public function queryByEmail($email){
+		$sql = "SELECT email, first_name, last_name, created, active FROM users WHERE email = ?";
+		$sqlQuery = new SqlQuery($sql);
+		
+		$sqlQuery->setString($email);
+		
+		return $this->getRow($sqlQuery);
+	}
+	
 	public function getByRepositoryId($id){
-		$sql = "SELECT u.email, u.first_name, u.last_name 
+		$sql = "SELECT u.email, u.first_name, u.last_name, u.created, u.active 
 				FROM users AS u JOIN repositories_users AS ru ON ru.user_id = u.id 
 				WHERE ru.repository_id = ?";
 		
@@ -43,7 +63,9 @@ class UsersMySqlDAO implements UsersDAO{
 		$user->email = $row['email'];
 		$user->name =  $row['first_name'];
 		$user->lastname = $row['last_name'];
-
+		$user->created = $row['created'];
+		$user->active = $row['active'];
+		
 		return $user;
 	}
 	

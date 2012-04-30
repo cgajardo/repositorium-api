@@ -13,6 +13,9 @@
 
 		var $lastname;
 
+		var $created;
+		
+		var $active;
 		
 		
 		/**
@@ -21,7 +24,8 @@
 		public function toArray(){
 			
 			return array("email"=>$this->email, "name"=>$this->name, 
-				"lastname"=>$this->lastname);
+				"lastname"=>$this->lastname, "created"=>$this->created, 
+				"active"=>$this->active);
 		}
 		
 	}
