@@ -7,6 +7,9 @@
 	 */
 	class User{
 		
+		//private
+		var $id; 
+		
 		var $email;
 		
 		var $name;
@@ -26,6 +29,15 @@
 			return array("email"=>$this->email, "name"=>$this->name, 
 				"lastname"=>$this->lastname, "created"=>$this->created, 
 				"active"=>$this->active);
+		}
+		
+		/**
+		 * returns boolean
+		 */
+		public function canAfford($repository){
+			$userPoints = DAOFactory::getUsersDAO()->getPointsInRepo($this->id, $repository);
+			print_r($userPoints);
+			$downloadCost = DAOFactory::getRepositoriesDAO()->getDownloadCost($repository);
 		}
 		
 	}

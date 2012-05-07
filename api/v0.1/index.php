@@ -6,8 +6,9 @@ include_once('../elements/repositories.php');
 include_once('../elements/users.php');
 include_once('../model/include_dao.php');
 Epi::setPath('base', '../epi');
-Epi::init('route','session-php');
 Epi::init('api');
+Epi::init('session');
+EpiSession::employ(EpiSession::PHP);
 
 
 
@@ -27,8 +28,9 @@ getRoute()->delete('/repositories/(\d+)/users', 'Forbidden');
 /** users **/
 //users-post
 getRoute()->post("/users", array('Users', 'add'), EpiApi::external);
-getRoute()->post("/users/([^/]+)", array('Users', 'login'), EpiApi::external);
+getRoute()->get("/users/login", array('Users', 'login'), EpiApi::external);
 //users-get
+
 //TODO: regular expression to filter email adresses
 getRoute()->get("/users/([^/]+)", array('Users', 'load'), EpiApi::external);
 getRoute()->get("/users/([^/]+)/repositories", array('Users', 'loadRepositories'), EpiApi::external);

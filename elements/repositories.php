@@ -37,7 +37,21 @@ class Repositories{
 	}
 	
 	public static function search($id, $query){
-		//TODO: make the search!!!!
+		$User = getSession()->get('user');
+		
+		if($User == null){
+			$Error = new Error();
+			$Error->status = "401 Unauthorized";
+			$Error->message = "User must be logged in";
+			header('HTTP/1.1 401 Unauthorized');
+			return $Error->toArray();
+		}
+		
+		if($User->canAfford($id)){
+			//muestro la lista de documentos	
+		}else{
+			//muestro la lista de desaf’os
+		}
 	}
 
 }

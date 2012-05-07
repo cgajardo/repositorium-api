@@ -16,5 +16,7 @@
 	require_once('../model/dao/UsersDAO.class.php');
 	require_once('../model/dto/User.class.php');
 	require_once('../model/mysql/UsersMySqlDAO.class.php');
+	
+	require_once('../model/dto/Error.class.php');
 
 ?>

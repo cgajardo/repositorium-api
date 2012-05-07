@@ -5,16 +5,23 @@ class Users{
 		//TODO: hacer!
 	}
 
-	public static function login($username){
-		if(!isset($_POST['password'])){
+	public static function login(){
+		
+		if(!isset($_GET['password'])){
 			header('HTTP/1.1 401 Unauthorized');
-			exit(0);
+			$Error = new Error();
+			$Error->status = "401 Unauthorized";
+			$Error->message = "Please provide an username and password";
+			return $Error->toArray();
 		}
 		
-		$password = $_POST['password'];
+		$password = $_GET['password'];
+		$email = $_GET['email'];
 		//TODO: Si el password coincide, lo agrego a la session!
-		getSession()->set('user', $username);
-		echo "RWIN";
+		$User = DAOFactory::getUsersDAO()->queryByEmail($email);
+		getSession()->set('user', $User);
+		
+		return $User->toArray();
 	}
 	
 	public static function load($email){
