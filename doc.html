@@ -40,9 +40,28 @@
         </div>
 
         <h3>List of methods</h3>
-
-<p>This API is been developed for mobile applications to interact with <a href="http://www.repositorium.cl">Repositorium</a> <br>
-(you can check Repositorium coder at <a href="http://github.com/jyby/repositorium">Jérémy's</a>)</p>
+        <table>
+        	<tr>
+        		<th>Method</th>
+        		<th>Resource</th>
+        		<th>Description</th>
+	        </tr>
+	        <tr>
+	        	<td>GET</td>
+	        	<td>/repositories</td>
+	        	<td><p>Returns a list of all avaliable repositories</p></td>
+	        </tr>
+	        <tr>
+	        	<td>GET</td>
+	        	<td>/repositories/:id</td>
+	        	<td><p>Returns the respository with ID :id</p></td>
+	        </tr>
+	        <tr>
+	        	<td>GET</td>
+	        	<td>/repositories/:id/stats</td>
+	        	<td><p>Returns stats from repository with ID :id</p></td>
+	        </tr>
+        </table>
 
 <p>This work is part of my engineering thesis, so I hope this works well.</p>
 
