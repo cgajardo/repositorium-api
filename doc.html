@@ -38,32 +38,47 @@
           <span class="credits left">Project maintained by <a href="https://github.com/cgajardo">cgajardo</a></span>
           <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="http://twitter.com/#!/michigangraham">mattgraham</a></span>
         </div>
+		
+		<div id="methods">
+	        <h3>List of methods</h3>
+	        <p>This table shows all available methods, * denotates parameter value, [...] denotates optional parameters, 
+	        | stands for logic OR operator</p>
+	        <table>
+	        	<tr>
+	        		<th>Method</th>
+	        		<th>Resource</th>
+	        		<th>Description</th>
+		        </tr>
+		        <tr>
+		        	<td>GET</td>
+		        	<td><a href="#repository">/repositories</a></td>
+		        	<td>Returns a list of all available repositories</td>
+		        </tr>
+		        <tr>
+		        	<td>GET</td>
+		        	<td><a href="#repository">/repositories/*id</a></td>
+		        	<td>Returns the respository with ID *id</td>
+		        </tr>
+		        <tr>
+		        	<td>GET</td>
+		        	<td><a href="#repository">/repositories/*id/stats</a></td>
+		        	<td>Returns stats from repository with ID *id</td>
+		        </tr>
+		        <tr>
+		        	<td>GET</td>
+		        	<td><a href="#repository">/repositories/*id/search:*query[;fields:[*tags|*title|*content]]</a></td>
+		        	<td>If currente users can afford for this download this method will retun a list of documents, otherwise
+		        	it'll return a lis of challenges</td>
+		        </tr>
+	        </table>
+	  </div>
+	  <div id="representation">
+	  </div>
+	  <div id ="examples">
+	  	<div id="repository">
+	  	</div>
+	  </div>
 
-        <h3>List of methods</h3>
-        <table>
-        	<tr>
-        		<th>Method</th>
-        		<th>Resource</th>
-        		<th>Description</th>
-	        </tr>
-	        <tr>
-	        	<td>GET</td>
-	        	<td>/repositories</td>
-	        	<td>Returns a list of all available repositories</td>
-	        </tr>
-	        <tr>
-	        	<td>GET</td>
-	        	<td>/repositories/:id</td>
-	        	<td>Returns the respository with ID :id</td>
-	        </tr>
-	        <tr>
-	        	<td>GET</td>
-	        	<td>/repositories/:id/stats</td>
-	        	<td>Returns stats from repository with ID :id</td>
-	        </tr>
-        </table>
-
-<p>This work is part of my engineering thesis, so I hope this works well.</p>
 
 
 <h3>Authors and Contributors</h3>
