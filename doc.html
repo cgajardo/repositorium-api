@@ -41,7 +41,7 @@
 		
 		<div id="methods">
 	        <h3>List of methods</h3>
-	        <p>This table shows all available methods, * denotates parameter value, [...] denotates optional parameters, 
+	        <p>This table shows all available methods, _ denotates parameter value, [...] denotates optional parameters, 
 	        | stands for logic OR operator</p>
 	        <table>
 	        	<tr>
@@ -56,19 +56,19 @@
 		        </tr>
 		        <tr>
 		        	<td>GET</td>
-		        	<td><a href="#repository">/repositories/*id</a></td>
-		        	<td>Returns the respository with ID *id</td>
+		        	<td><a href="#repository">/repositories/_id</a></td>
+		        	<td>Returns the respository with ID _id</td>
 		        </tr>
 		        <tr>
 		        	<td>GET</td>
-		        	<td><a href="#repository">/repositories/*id/stats</a></td>
-		        	<td>Returns stats from repository with ID *id</td>
+		        	<td><a href="#repository">/repositories/_id/stats</a></td>
+		        	<td>Returns stats from repository with ID _id</td>
 		        </tr>
 		        <tr>
 		        	<td>GET</td>
-		        	<td><a href="#repository">/repositories/*id/search:*query[;fields:[*tags|*title|*content]]</a></td>
+		        	<td><a href="#repository">/repositories/_id/search:_query<br>[;fields:tags,title,content]</a></td>
 		        	<td>If currente users can afford for this download this method will retun a list of documents, otherwise
-		        	it'll return a lis of challenges</td>
+		        	it'll return a lis of challenges. If no field is declared then search will consider just title field</td>
 		        </tr>
 	        </table>
 	  </div>
