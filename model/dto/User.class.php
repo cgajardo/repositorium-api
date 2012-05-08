@@ -36,8 +36,12 @@
 		 */
 		public function canAfford($repository){
 			$userPoints = DAOFactory::getUsersDAO()->getPointsInRepo($this->id, $repository);
-			print_r($userPoints);
 			$downloadCost = DAOFactory::getRepositoriesDAO()->getDownloadCost($repository);
+			
+			if($userPoints >= $downloadCost)
+				return true;
+			
+			return false;
 		}
 		
 	}

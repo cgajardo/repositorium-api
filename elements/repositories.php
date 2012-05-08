@@ -52,6 +52,8 @@ class Repositories{
 		}else{
 			//muestro la lista de desaf’os
 		}
+		
+		return $User->canAfford($id);
 	}
 
 }

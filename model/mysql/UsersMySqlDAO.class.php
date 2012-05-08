@@ -9,15 +9,13 @@ class UsersMySqlDAO implements UsersDAO{
 /** Public functions **/
 	
 	public function getPointsInRepo($user_id, $repository_id){
-		$sql = "SELECT points
-				FROM repositories_users
-				WHERE repository_id = ? AND user_id = ?";
+		$sql = "SELECT points FROM repositories_users WHERE repository_id = ? AND user_id = ?";
 		
 		$sqlQuery = new SqlQuery($sql);
 		$sqlQuery->setNumber($repository_id);
 		$sqlQuery->setNumber($user_id);
 		
-		return $this->execute($sqlQuery);
+		return $this->querySingleResult($sqlQuery);
 	}
 	
 	public function updatePassword($email, $password){

@@ -8,6 +8,14 @@ class RepositoriesMySqlDAO implements RepositoriesDAO{
 
 /** Public functions **/
 	
+	public function getDownloadCost($repository_id){
+		$sql = "SELECT download_cost FROM repositories WHERE id = ?";
+		$sqlQuery = new SqlQuery($sql);
+		
+		$sqlQuery->setNumber($repository_id);
+		
+	}
+	
 	public function load($id){
 		$sql = "SELECT id, name, description, user_id, active FROM repositories WHERE id = ?";
 		$sqlQuery = new SqlQuery($sql);
