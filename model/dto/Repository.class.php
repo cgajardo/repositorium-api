@@ -24,7 +24,7 @@
 		public function toArray(){
 			
 			return array("id"=>$this->id, "name"=>$this->name, 
-				"description"=>$this->description, "author"=>$this->author, "active"=>$this->active);
+				"description"=>$this->description, "author"=>$this->author->toArray(), "active"=>$this->active);
 		}
 		
 	}

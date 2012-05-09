@@ -2,36 +2,13 @@
 /**
  * 
  * @author: cgajardo
- * @date: 2012-04-20 00:52
+ * @date: 2012-05-08 16:32
  */
-class RepositoriesMySqlDAO implements RepositoriesDAO{
+class DocumentsMySqlDAO implements DocumentsDAO{
 
 /** Public functions **/
 	
-	public function getDownloadCost($repository_id){
-		$sql = "SELECT download_cost FROM repositories WHERE id = ?";
-		$sqlQuery = new SqlQuery($sql);
-		
-		$sqlQuery->setNumber($repository_id);
-		
-		return $this->querySingleResult($sqlQuery);
-	}
-	
-	public function load($id){
-		$sql = "SELECT id, name, description, user_id, active FROM repositories WHERE id = ?";
-		$sqlQuery = new SqlQuery($sql);
-		
-		$sqlQuery->setNumber($id);
-		
-		return $this->getRow($sqlQuery);
-	}
 
-	public function queryAll(){
-		$sql = "SELECT id, name, description, user_id, active FROM repositories";
-		$sqlQuery = new SqlQuery($sql);
-		
-		return $this->getList($sqlQuery);
-	}
 
 
 /** Private functions **/
@@ -42,15 +19,17 @@ class RepositoriesMySqlDAO implements RepositoriesDAO{
 	 * @return Repository
 	 */
 	protected function readRow($row){
-		$repository = new Repository();
+		$document = new Document();
 		
-		$repository->id = $row['id'];
-		$repository->name = $row['name'];
-		$repository->description = $row['description'];
-		$repository->author = DAOFactory::getUsersDAO()->load($row['user_id']);
-		$repository->active = $row['active'];
+		$document->title = $row['title'];
+		$document->content = $row['content']; 
+		$document->created = $row['created'];
+		$document->author = $row['user_id'];
+		//TODO: retrieve tags and files
+		$document->tags = null;
+		$document->files = null;
 
-		return $repository;
+		return $document;
 	}
 	
 	protected function getList($sqlQuery){

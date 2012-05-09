@@ -8,6 +8,13 @@
 class DAOFactory{
 	
 	/**
+	 * @return DocumentsDAO
+	 */
+	public static function getDocumentsDAO(){
+		return new DocumentsMySqlDAO();
+	}
+	
+	/**
 	 * @return RepositoriesDAO
 	 */
 	public static function getRepositoriesDAO(){

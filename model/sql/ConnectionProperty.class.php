@@ -9,7 +9,7 @@ class ConnectionProperty{
 	private static $host = '127.0.0.1';
 	private static $user = 'root';
 	private static $password = 'root';
-	private static $database = 'repo_thesis';
+	private static $database = 'repo';
 
 	public static function getHost(){
 		return ConnectionProperty::$host;

@@ -47,13 +47,39 @@ class Repositories{
 			return $Error->toArray();
 		}
 		
+		//user can afford this search
 		if($User->canAfford($id)){
-			//muestro la lista de documentos	
+			//muestro un set aleatorio de documentos TODO: do the search
+			$arguments =  explode(";",$query);
+			
+			if(count($arguments) == 2){
+				$fields = explode("fields:",$arguments[1]);
+				$fields = $fields[0];
+				$search  = array("tags", "title", "content", ",");
+				$replace = array("tag LIKE '%?%'", "title LIKE '%?%'", "content LIKE '%?%'", " OR ");
+				$injet = str_replace($search, $replace, $fields);
+				return "afford".$injet;
+			}
+			$query = $arguments[0];
+			
+				
+		//user cann't afford this search
 		}else{
-			//muestro la lista de desaf’os
+			//gurado la querry en session y le paso un set de desaf’os
+			
+			//muestro un set aleatorio de documentos TODO: do the search
+			$arguments =  explode(";",$query);
+
+			if(count($arguments) == 2){
+				$fields = explode(":",$arguments[1]);
+				$fields = $fields[1];
+				$search  = array("tags", "title", "content", ",");
+				$replace = array("tag LIKE '%?%'", "title LIKE '%?%'", "content LIKE '%?%'", " OR ");
+				$injet = str_replace($search, $replace, $fields);
+			}
+			$query = $arguments[0];
+			
 		}
-		
-		return $User->canAfford($id);
 	}
 
 }
