@@ -8,6 +8,15 @@ class RepositoriesMySqlDAO implements RepositoriesDAO{
 
 /** Public functions **/
 	
+	public function getPackSize($repository_id){
+		$sql = "SELECT documentpack_size FROM repositories WHERE id = ?";
+		$sqlQuery = new SqlQuery($sql);
+		
+		$sqlQuery->setNumber($repository_id);
+		
+		return $this->querySingleResult($sqlQuery);
+	}
+	
 	public function getDownloadCost($repository_id){
 		$sql = "SELECT download_cost FROM repositories WHERE id = ?";
 		$sqlQuery = new SqlQuery($sql);
@@ -17,11 +26,11 @@ class RepositoriesMySqlDAO implements RepositoriesDAO{
 		return $this->querySingleResult($sqlQuery);
 	}
 	
-	public function load($id){
+	public function load($repository_id){
 		$sql = "SELECT id, name, description, user_id, active FROM repositories WHERE id = ?";
 		$sqlQuery = new SqlQuery($sql);
 		
-		$sqlQuery->setNumber($id);
+		$sqlQuery->setNumber($repository_id);
 		
 		return $this->getRow($sqlQuery);
 	}

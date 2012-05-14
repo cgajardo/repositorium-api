@@ -7,6 +7,14 @@
  */
 interface DocumentsDAO{
 	
+	/**
+	 * Returns a random list o document matching the search query in _filters
+	 * 
+	 * @param int $repository_id
+	 * @param string $filters
+	 * @param int $limit
+	 */
+	public function search($repository_id, $filters, $limit);	
 	
 }
 ?>

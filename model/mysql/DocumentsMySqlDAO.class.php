@@ -8,6 +8,33 @@ class DocumentsMySqlDAO implements DocumentsDAO{
 
 /** Public functions **/
 	
+	public function queryForChallenge($criteria_id, $total){
+		$sql = "SELECT d.id, d.title, d.content, d.created, d.user_id ".
+				"FROM documents AS d, criterias_documents AS cd ".
+				"WHERE cd.document_id = d.id AND cd.criteria_id = ? ".
+				"ORDER BY RAND() ".
+				"LIMIT ?";
+		
+		$sqlQuery = new SqlQuery($sql);
+		$sqlQuery->setNumber($criteria_id);
+		$sqlQuery->setNumber($total);
+		
+		return $this->getList($sqlQuery);
+		
+	}
+	
+	public function search($repository_id, $filters, $limit){
+		$sql = "SELECT d.id, d.title, d.content, d.created, d.user_id ".
+				"FROM documents as d, tags as t ".
+				"WHERE d.id = t.document_id AND repository_id = ? AND (?) ORDER BY RAND() LIMIT ?";
+		
+		$sqlQuery = new SqlQuery($sql);
+		$sqlQuery->setNumber($repository_id);
+		$sqlQuery->setRawString($filters);
+		$sqlQuery->setNumber($limit);
+		
+		return $this->getList($sqlQuery);
+	}
 
 
 
@@ -21,10 +48,11 @@ class DocumentsMySqlDAO implements DocumentsDAO{
 	protected function readRow($row){
 		$document = new Document();
 		
+		$document->id = $row['id'];
 		$document->title = $row['title'];
 		$document->content = $row['content']; 
 		$document->created = $row['created'];
-		$document->author = $row['user_id'];
+		$document->author = DAOFactory::getUsersDAO()->load($row['user_id'])->toArray();
 		//TODO: retrieve tags and files
 		$document->tags = null;
 		$document->files = null;

@@ -21,6 +21,10 @@
 	require_once('../model/dto/Document.class.php');
 	require_once('../model/mysql/DocumentsMySqlDAO.class.php');
 	
+	require_once('../model/dao/ChallengesDAO.class.php');
+	require_once('../model/dto/Challenge.class.php');
+	require_once('../model/mysql/ChallengesMySqlDAO.class.php');
+	
 	require_once('../model/dto/Error.class.php');
 
 ?>

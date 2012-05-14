@@ -27,6 +27,13 @@ class DAOFactory{
 	public static function getUsersDAO(){
 		return new UsersMySqlDAO();
 	}
+	
+	/**
+	 * @return ChallengesDAO
+	 */
+	public static function getChallengesDAO(){
+		return new ChallengesMySqlDAO();
+	}
 
 
 }

@@ -7,6 +7,9 @@
 	 */
 	class Document{
 		
+		//private
+		var $id;
+		
 		var $title;
 		
 		var $content;

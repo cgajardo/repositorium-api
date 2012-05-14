@@ -18,7 +18,16 @@ class SqlQuery{
 	function SqlQuery($txt){
 		$this->txt = $txt;
 	}
-
+	
+	/**
+	 * Set String param without escaping. Be carefull!!!
+	 * @param String $value
+	 */
+	public function setRawString ($value){
+		//WARNING: be careful
+		$this->params[$this->idx++] = $value;
+	}
+		
 	/**
 	 * Set string param
 	 *

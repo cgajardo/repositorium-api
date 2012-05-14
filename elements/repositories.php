@@ -36,9 +36,10 @@ class Repositories{
 		return $users;
 	}
 	
-	public static function search($id, $query){
+	public static function search($id, $query, $fields = null){
 		$User = getSession()->get('user');
 		
+		//there's no user in session
 		if($User == null){
 			$Error = new Error();
 			$Error->status = "401 Unauthorized";
@@ -49,36 +50,37 @@ class Repositories{
 		
 		//user can afford this search
 		if($User->canAfford($id)){
-			//muestro un set aleatorio de documentos TODO: do the search
-			$arguments =  explode(";",$query);
-			
-			if(count($arguments) == 2){
-				$fields = explode("fields:",$arguments[1]);
-				$fields = $fields[0];
+			if($fields != null){
 				$search  = array("tags", "title", "content", ",");
-				$replace = array("tag LIKE '%?%'", "title LIKE '%?%'", "content LIKE '%?%'", " OR ");
-				$injet = str_replace($search, $replace, $fields);
-				return "afford".$injet;
+				$replace = array("tag LIKE '%".$query."%'", "title LIKE '%".$query."%'", "content LIKE '%".$query."%'", " OR ");
+				$filter = str_replace($search, $replace, $fields);
+			}else{
+				$filter = "tag LIKE '%".$query."%' OR title LIKE '%".$query."%' OR content LIKE '%".$query."%'";
 			}
-			$query = $arguments[0];
 			
+			$limit = DAOFactory::getRepositoriesDAO()->getPackSize($id);
+			$documents = DAOFactory::getDocumentsDAO()->search($id, $filter, $limit);
+			
+			//to obscure data to user
+			foreach ($documents as $documents){
+				unset($documents->id);
+			}
+			
+			//TODO: substract the point of this dowload
+			//DAOFactory::getUsersDAO()->substractPoints($id);
+			
+			//returns a list of documents resulting from the search query
+			return $documents;
 				
 		//user cann't afford this search
 		}else{
-			//gurado la querry en session y le paso un set de desaf’os
+			//put query on session to search when user answers question
+			getSession()->set("search_query", $query);
 			
-			//muestro un set aleatorio de documentos TODO: do the search
-			$arguments =  explode(";",$query);
-
-			if(count($arguments) == 2){
-				$fields = explode(":",$arguments[1]);
-				$fields = $fields[1];
-				$search  = array("tags", "title", "content", ",");
-				$replace = array("tag LIKE '%?%'", "title LIKE '%?%'", "content LIKE '%?%'", " OR ");
-				$injet = str_replace($search, $replace, $fields);
-			}
-			$query = $arguments[0];
+			$challenges = DAOFactory::getChallengesDAO()->getChallenges($id,$User->id);
 			
+			//return a challenge for this user
+			return $challenges;
 		}
 	}
 
