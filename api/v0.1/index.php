@@ -25,14 +25,14 @@ getRoute()->get('/repositories/(\d+)/search:([^/]+)', array('Repositories','sear
 
 //repositories-delete
 getRoute()->delete('/repositories', 'Forbidden');
+getRoute()->delete('/repositories/(\d+)', 'Forbidden');
 getRoute()->delete('/repositories/(\d+)/users', 'Forbidden');
 
 /** users **/
 //users-post
 getRoute()->post("/users", array('Users', 'add'), EpiApi::external);
-getRoute()->get("/users/login", array('Users', 'login'), EpiApi::external);
+getRoute()->post("/users/login", array('Users', 'login'), EpiApi::external);
 //users-get
-
 //TODO: regular expression to filter email adresses
 getRoute()->get("/users/([^/]+)", array('Users', 'load'), EpiApi::external);
 getRoute()->get("/users/([^/]+)/repositories", array('Users', 'loadRepositories'), EpiApi::external);
@@ -41,6 +41,10 @@ getRoute()->put("/users/([^/]+)", array('Users', 'update'), EpiApi::external);
 //users-delete
 getRoute()->delete("/users", 'Forbidden');
 getRoute()->delete("/users/([^/]+)/repositories", 'Forbidden');
+
+/** challenges **/
+//challenges
+getRoute()->post("/challenges", array('Challenges', 'submit'), EpiApi::external);
 
 
 //RUN!
