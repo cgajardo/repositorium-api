@@ -5,8 +5,57 @@
  * @date: 2012-04-26 23:35
  */
 class UsersMySqlDAO implements UsersDAO{
-
+//TODO: documentar cada funci—n en UsersDAO
 /** Public functions **/
+	
+	public function add($user, $password){
+		$sql = "INSERT INTO users(email,first_name, last_name, password, salt, created) ".
+				"VALUES(?, ?, ?, ?, ?,?)";
+		
+		$sqlQuery = new SqlQuery($sql);
+		$sqlQuery->setString($user->email);
+		$sqlQuery->setString($user->name);
+		$sqlQuery->setString($user->lastname);
+		
+		$salt = mt_rand();
+		$pass = sha1($password.$salt);
+		
+		$sqlQuery->setString($pass);
+		$sqlQuery->setString($salt);
+		$sqlQuery->setString(date('c'));
+		
+		$this->executeInsert($sqlQuery);
+		
+		
+	}
+	
+	public function update($user){
+		$sql = "UPDATE users SET email = ?, first_name = ?, last_name = ? WHERE id = ?";
+		$sqlQuery = new SqlQuery($sql);
+		$sqlQuery->setString($user->email);
+		$sqlQuery->setString($user->name);
+		$sqlQuery->setString($user->lastname);
+		$sqlQuery->setNumber($user->id);
+		
+		//TODO:should I do something with this?
+		$row_affected = $this->executeUpdate($sqlQuery);
+	}
+	
+	public function getUserSalt($user_id){
+		$sql = "SELECT salt FROM users WHERE id = ?";
+		$sqlQuery = new SqlQuery($sql);
+		$sqlQuery->setNumber($user_id);
+		
+		return $this->querySingleResult($sqlQuery);
+	}
+	
+	public function getUserPassword($user_id){
+		$sql = "SELECT password FROM users WHERE id = ?";
+		$sqlQuery = new SqlQuery($sql);
+		$sqlQuery->setNumber($user_id);
+		
+		return $this->querySingleResult($sqlQuery);
+	}
 	
 	public function getPointsInRepo($user_id, $repository_id){
 		$sql = "SELECT points FROM repositories_users WHERE repository_id = ? AND user_id = ?";

@@ -8,6 +8,17 @@ class RepositoriesMySqlDAO implements RepositoriesDAO{
 
 /** Public functions **/
 	
+	public function queryForUser($email){
+		$sql = "SELECT * from repositories WHERE id IN (".
+					"SELECT repository_id FROM repositories_users WHERE user_id IN (".
+						"SELECT id FROM users WHERE email = ?))";
+		
+		$sqlQuery = new SqlQuery($sql);
+		$sqlQuery->setString($email);
+		
+		return $this->getList($sqlQuery);
+	}
+	
 	public function getPackSize($repository_id){
 		$sql = "SELECT documentpack_size FROM repositories WHERE id = ?";
 		$sqlQuery = new SqlQuery($sql);

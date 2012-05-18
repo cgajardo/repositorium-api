@@ -25,6 +25,11 @@ class EpiRoute
   const httpPost= 'POST';
   const httpPut = 'PUT';
   const httpDelete = 'DELETE';
+  /**
+   * This constant will modify header for all responses
+   * @author: cgajardo
+   */
+  const httpHeaderType = 'Content-type: application/json';
 
   /**
    * get('/', 'function');
@@ -133,8 +138,11 @@ class EpiRoute
     $response = call_user_func_array($routeDef['callback'], $routeDef['args']);
     if(!$routeDef['postprocess'])
       return $response;
-    else
-      echo json_encode($response);
+    else{
+    	header(self::httpHeaderType);
+    	echo json_encode($response);
+    }
+      
   }
 
   /**

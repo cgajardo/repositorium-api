@@ -2,7 +2,21 @@
 class Users{
 	
 	public static function add(){
-		//TODO: hacer!
+		$User = new User();
+		//check for minimum set of data
+		if(!isset($_POST['name']) or !isset($_POST['email']) or !isset($_POST['password'])){
+			header('HTTP/1.1 488 Incomplete request');
+			$Error = new Error();
+			$Error->status = "488 Incomplete request";
+			$Error->message = "Please provide email, name and password";
+			return $Error->toArray();
+		}
+		
+		$User->email = $_POST['email'];
+		$User->name = $_POST['name'];
+		$User->lastname = $_POST['lastname'];
+		
+		DAOFactory::getUsersDAO()->add($User, $_POST['password']);
 	}
 
 	public static function login(){
@@ -11,22 +25,34 @@ class Users{
 			header('HTTP/1.1 401 Unauthorized');
 			$Error = new Error();
 			$Error->status = "401 Unauthorized";
-			$Error->message = "Please provide an username and password";
+			$Error->message = "Please provide an email and password";
 			return $Error->toArray();
 		}
 		
 		$password = $_GET['password'];
 		$email = $_GET['email'];
-		//TODO: Si el password coincide, lo agrego a la session!
 		$User = DAOFactory::getUsersDAO()->queryByEmail($email);
-		getSession()->set('user', $User);
 		
-		return $User->toArray();
+		/**
+		 * if passwords match, then add user to session
+		 * otherwise return error message
+		 */
+		if(checkPassword($User->id, $password)) {
+			getSession()->set('user', $User);
+			return $User->toArray();
+			
+		}else{
+			header('HTTP/1.1 401 Unauthorized');
+			$Error = new Error();
+			$Error->status = "401 Unauthorized";
+			$Error->message = "Incorrect email or password";
+			return $Error->toArray(); 
+			
+		}
+		
 	}
 	
 	public static function load($email){
-		//TODO: aplicar esto nivel de la api
-		header('Content-type: application/json');
 		$user = DAOFactory::getUsersDAO()->queryByEmail($email);
 		return $user;
 	}
@@ -41,26 +67,50 @@ class Users{
 			header('HTTP/1.1 400 Bad Request');
 			return array(
 					"status"=>"400 Bad Request", 
-					"message"=>"user with email ".$email
+					"message"=>"User with email ".$email
 						." was not found. If you want to create an user, try doin a POST to /users");
 		}
 		
-		if(isset($_PUT['name'])){
+		if(isset($_PUT['name']))
 			$user->name = $_PUT['name'];
-			//header('HTTP/1.1 418 I\'m a teapot');		
-		}
-		if(isset($_PUT['lastname'])){
+
+		if(isset($_PUT['lastname']))
 			$user->lastname = $_PUT['lastname'];
-		}
+			
 		if(isset($_PUT['new_password']) && isset($_PUT['password'])){
-			//TODO: Si el password coincide, cambio el password
-			DAOFactory::getUsersDAO()->updatePassword($email, $_PUT['new_password']);
+			if(checkPassword($user->id, $password)){
+				$salt = DAOFactory::getUsersDAO()->getUserSalt($user->id);
+				$newPassword = sha1($_PUT['new_password'].$salt);
+				DAOFactory::getUsersDAO()->updatePassword($email,$newPassword);
+				
+			}else{
+				header('HTTP/1.1 401 Unauthorized');
+				$Error = new Error();
+				$Error->status = "401 Unauthorized";
+				$Error->message = "Incorrect Password";
+				return $Error->toArray();
+			}
 		}
 		
+		//finally we update User data and the user in session
+		DAOFactory::getUsersDAO()->update($user);
+		getSession()->set('user', $user);
 	}
 	
-	public static function loadRepositories($username){
-		//TODO: do!
+	public static function loadRepositories($email){
+		return DAOFactory::getRepositoriesDAO()->queryForUser($email);
+	}
+	
+	
+	private static function checkPassword($user_id, $password){
+		$originalPassword = DAOFactory::getUsersDAO()->getUserPassword($user_id);
+		$salt = DAOFactory::getUsersDAO()->getUserSalt($user_id);
+		$calculatedPassword = sha1($password.$salt);
+		// if passwords match, return true
+		if(strcmp($calculatedPassword,$originalPassword) == 0)
+			return true;
+		//else
+		return false;
 	}
 
 }
