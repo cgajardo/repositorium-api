@@ -81,7 +81,7 @@ class Users{
 			if(checkPassword($user->id, $password)){
 				$salt = DAOFactory::getUsersDAO()->getUserSalt($user->id);
 				$newPassword = sha1($_PUT['new_password'].$salt);
-				DAOFactory::getUsersDAO()->updatePassword($email,$newPassword);
+				DAOFactory::getUsersDAO()->updatePassword($user->id,$newPassword);
 				
 			}else{
 				header('HTTP/1.1 401 Unauthorized');

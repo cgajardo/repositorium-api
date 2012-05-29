@@ -67,8 +67,7 @@ class Repositories{
 				unset($documents->id);
 			}
 			
-			//TODO: substract the point of this dowload
-			//DAOFactory::getUsersDAO()->substractPoints($id);
+			DAOFactory::getUsersDAO()->substractPoints($id, $User->id);
 			
 			//returns a list of documents resulting from the search query
 			return $documents;

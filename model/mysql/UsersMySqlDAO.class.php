@@ -8,6 +8,20 @@ class UsersMySqlDAO implements UsersDAO{
 //TODO: documentar cada funci—n en UsersDAO
 /** Public functions **/
 	
+	public function substractPoints($repo_id, $user_id){
+		$sql = "UPDATE repositories_users ". 
+				"SET points = (points - ( ".
+					"SELECT download_cost FROM repositories where id = ?))".
+				"WHERE repository_id = ? AND user_id = ?";
+		
+		$sqlQuery = new SqlQuery($sql);
+		$sqlQuery->setNumber($repo_id);
+		$sqlQuery->setNumber($repo_id);
+		$sqlQuery->setNumber($user_id);
+		
+		$this->executeUpdate($sqlQuery);
+	}
+	
 	public function add($user, $password){
 		$sql = "INSERT INTO users(email,first_name, last_name, password, salt, created) ".
 				"VALUES(?, ?, ?, ?, ?,?)";
@@ -25,7 +39,6 @@ class UsersMySqlDAO implements UsersDAO{
 		$sqlQuery->setString(date('c'));
 		
 		$this->executeInsert($sqlQuery);
-		
 		
 	}
 	
@@ -67,13 +80,13 @@ class UsersMySqlDAO implements UsersDAO{
 		return $this->querySingleResult($sqlQuery);
 	}
 	
-	public function updatePassword($email, $password){
-		//TODO: averiguar c—mo funciona el tema del SALT
-		$sql = "UPDATE users SET password = ? WHERE email = ?";
+	public function updatePassword($user_id, $password){
+		
+		$sql = "UPDATE users SET password = ? WHERE id = ?";
 		$sqlQuery = new SqlQuery($sql);
 		
-		$sqlQuery->setString($email);
 		$sqlQuery->setString($password);
+		$sqlQuery->setString($user_id);
 		
 		return $this->execute($sqlQuery);
 	}
