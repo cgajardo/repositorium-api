@@ -13,10 +13,12 @@ EpiSession::employ(EpiSession::PHP);
 
 
 //let's define some access routes
+/** defaul route: WELCOME **/
+getRoute()->get('/repositories', array('Repositories', 'index'), EpiApi::external);
 
 /** repositories **/
 //repositories-get
-getRoute()->get('/repositories', array('Repositories', 'index'), EpiApi::external);
+getRoute()->get('/repositories', 'showVersion');
 getRoute()->get('/repositories/(\d+)', array('Repositories','show'), EpiApi::external);
 getRoute()->get('/repositories/(\d+)/stats', array('Repositories','showStats'), EpiApi::external);
 getRoute()->get('/repositories/(\d+)/users', array('Repositories','showUsers'), EpiApi::external);
@@ -47,11 +49,15 @@ getRoute()->delete("/users/([^/]+)/repositories", 'Forbidden');
 getRoute()->post("/challenges", array('Challenges', 'submit'), EpiApi::external);
 
 
+
+
 //RUN!
 getRoute()->run();
 
 function showVersion() {
-  echo 'The version of this api is 0.1';
+  echo 'The version of this api is 0.1<br>';
+  echo 'You can find documentation <a href="http://cgajardo.github.com/repositorium-api/">here</a>';
+  
 }
 
 function Forbidden(){
