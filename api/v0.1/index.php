@@ -14,11 +14,11 @@ EpiSession::employ(EpiSession::PHP);
 
 //let's define some access routes
 /** defaul route: WELCOME **/
-getRoute()->get('/repositories', array('Repositories', 'index'), EpiApi::external);
+getRoute()->get('/', 'showVersion');
 
 /** repositories **/
 //repositories-get
-getRoute()->get('/repositories', 'showVersion');
+getRoute()->get('/repositories', array('Repositories', 'index'), EpiApi::external);
 getRoute()->get('/repositories/(\d+)', array('Repositories','show'), EpiApi::external);
 getRoute()->get('/repositories/(\d+)/stats', array('Repositories','showStats'), EpiApi::external);
 getRoute()->get('/repositories/(\d+)/users', array('Repositories','showUsers'), EpiApi::external);
