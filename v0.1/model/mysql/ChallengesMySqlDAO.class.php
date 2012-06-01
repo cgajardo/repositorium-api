@@ -31,6 +31,8 @@ class ChallengesMySqlDAO implements ChallengesDAO{
 		
 		$challenge = $row[0];
 		
+		return $challenge['id'];
+		
 		//get challenge size for user in this criteria
 		$sql = "SELECT challenge_size AS size ".
 				"FROM criterias_users ".

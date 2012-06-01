@@ -2,6 +2,7 @@
 class Users{
 	
 	public static function add(){
+		// TODO: check email is unique!!!
 		$User = new User();
 		//check for minimum set of data
 		if(!isset($_POST['name']) or !isset($_POST['email']) or !isset($_POST['password'])){
@@ -16,12 +17,14 @@ class Users{
 		$User->name = $_POST['name'];
 		$User->lastname = $_POST['lastname'];
 		
-		DAOFactory::getUsersDAO()->add($User, $_POST['password']);
+		$id = DAOFactory::getUsersDAO()->add($User, $_POST['password']);
+		$newUser = DAOFactory::getUsersDAO()->load($id);
+		return $newUser->toArray();
 	}
 
 	public static function login(){
 		
-		if(!isset($_GET['password'])){
+		if(!isset($_POST['password'])){
 			header('HTTP/1.1 401 Unauthorized');
 			$Error = new Error();
 			$Error->status = "401 Unauthorized";
@@ -29,15 +32,18 @@ class Users{
 			return $Error->toArray();
 		}
 		
-		$password = $_GET['password'];
-		$email = $_GET['email'];
+		$password = $_POST['password'];
+		$email = $_POST['email'];
 		$User = DAOFactory::getUsersDAO()->queryByEmail($email);
 		
 		/**
 		 * if passwords match, then add user to session
 		 * otherwise return error message
 		 */
-		if(checkPassword($User->id, $password)) {
+		
+		$checkPassword = array( 'self', 'checkPassword' );
+		
+		if(call_user_func( $checkPassword, $User->id, $password)) {
 			getSession()->set('user', $User);
 			return $User->toArray();
 			
@@ -78,7 +84,9 @@ class Users{
 			$user->lastname = $_PUT['lastname'];
 			
 		if(isset($_PUT['new_password']) && isset($_PUT['password'])){
-			if(checkPassword($user->id, $password)){
+			
+			$checkPassword = array( 'self', 'checkPassword' );
+			if(call_user_func( $checkPassword, $user->id, $password)){
 				$salt = DAOFactory::getUsersDAO()->getUserSalt($user->id);
 				$newPassword = sha1($_PUT['new_password'].$salt);
 				DAOFactory::getUsersDAO()->updatePassword($user->id,$newPassword);
@@ -102,7 +110,7 @@ class Users{
 	}
 	
 	
-	private static function checkPassword($user_id, $password){
+	public static function checkPassword($user_id, $password){
 		$originalPassword = DAOFactory::getUsersDAO()->getUserPassword($user_id);
 		$salt = DAOFactory::getUsersDAO()->getUserSalt($user_id);
 		$calculatedPassword = sha1($password.$salt);

@@ -2,18 +2,15 @@
 chdir('..');
 include_once('./v0.1/utils.php');
 include_once('../epi/Epi.php');
-include_once('../elements/repositories.php');
-include_once('../elements/users.php');
-include_once('../model/include_dao.php');
+include_once('../v0.1/elements/repositories.php');
+include_once('../v0.1/elements/users.php');
+include_once('../v0.1/model/include_dao.php');
 Epi::setPath('base', '../epi');
 Epi::init('api');
 Epi::init('session');
 EpiSession::employ(EpiSession::PHP);
 
-
-
-//let's define some access routes
-/** defaul route: WELCOME **/
+/** welcome **/
 getRoute()->get('/', 'showVersion');
 
 /** repositories **/
@@ -48,21 +45,30 @@ getRoute()->delete("/users/([^/]+)/repositories", 'Forbidden');
 //challenges
 getRoute()->post("/challenges", array('Challenges', 'submit'), EpiApi::external);
 
-
-
+//TODO: tablas de aceptacion
 
 //RUN!
 getRoute()->run();
 
 function showVersion() {
+  header('HTTP/1.1 200 OK');
   echo 'The version of this api is 0.1<br>';
   echo 'You can find documentation <a href="http://cgajardo.github.com/repositorium-api/">here</a>';
+  exit(0);
   
 }
 
 function Forbidden(){
 	header('HTTP/1.1 403 Forbidden');
 	exit(0);
+}
+
+function RTFM(){
+	header('HTTP/1.1 405 Method Not Allowed');
+	//TODO: include list of allowed method for this request
+	echo 'You can find documentation at http://cgajardo.github.com/repositorium-api/';
+	exit(0);
+	
 }
 
 

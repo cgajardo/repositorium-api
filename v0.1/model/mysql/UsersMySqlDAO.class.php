@@ -5,7 +5,7 @@
  * @date: 2012-04-26 23:35
  */
 class UsersMySqlDAO implements UsersDAO{
-//TODO: documentar cada funci—n en UsersDAO
+
 /** Public functions **/
 	
 	public function substractPoints($repo_id, $user_id){
@@ -38,7 +38,7 @@ class UsersMySqlDAO implements UsersDAO{
 		$sqlQuery->setString($salt);
 		$sqlQuery->setString(date('c'));
 		
-		$this->executeInsert($sqlQuery);
+		return $this->executeInsert($sqlQuery);
 		
 	}
 	
