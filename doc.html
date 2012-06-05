@@ -72,6 +72,11 @@
 		        </tr>
 		        <tr>
 		        	<td>GET</td>
+		        	<td><a href="#repository">/repositories/_id/users</a></td>
+		        	<td>Returns a list of users subscribed to repository with ID _id</td>
+		        </tr>
+		        <tr>
+		        	<td>GET</td>
 		        	<td><a href="#repository">/repositories/_id/search:_query<br>[fields:tags|title|content]</a></td>
 		        	<td>If current users can afford for this download this method will retun a list of documents, otherwise
 		        	it'll return a list of challenges. If no field is declared then search will consider all fields</td>
@@ -83,13 +88,13 @@
 		        </tr>
 		        <tr>
 		        	<td>GET</td>
-		        	<td><a href="#repository">/repositories/_id/challenges</a></td>
-		        	<td>Returns a challenge.</td>
+		        	<td><a href="#repository">/repositories/_id/document/random</a></td>
+		        	<td>Returns a random document from repository.</td>
 		        </tr>
 		        <tr>
 		        	<td>GET</td>
-		        	<td><a href="#repository">/repositories/_id/document/random</a></td>
-		        	<td>Returns a random document from repository.</td>
+		        	<td><a href="#repository">/repositories/_id/challenges</a></td>
+		        	<td>Returns a challenge for user in session. If no user is in session returns error 401 Unauthorized.</td>
 		        </tr>
 		        <tr>
 		        	<td>POST</td>
@@ -167,7 +172,6 @@
 		        	<td><a href="#repository">/users</a></td>
 		        	<td>Returns error 403 Forbidden</td>
 		        </tr>
-		        
 	        </table>
 	        
 	        
