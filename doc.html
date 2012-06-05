@@ -41,8 +41,14 @@
 		
 		<div id="methods">
 	        <h3>List of methods</h3>
-	        <p>This table shows all available methods, _ denotates parameter value, [...] denotates optional parameters, 
-	        | stands for logic OR operator</p>
+	        <p>This table shows all available methods.<br>
+	        _ denotates parameter value<br>
+	        {...} denotates mandatory parameters<br>
+	        [...] denotates optional parameters<br> 
+	        ; stands for logic AND operator
+	        | stands for logic OR operator<br></p>
+	        
+	        <h4>Methods for Repository</h4>
 	        <table>
 	        	<tr>
 	        		<th>Method</th>
@@ -66,11 +72,105 @@
 		        </tr>
 		        <tr>
 		        	<td>GET</td>
-		        	<td><a href="#repository">/repositories/_id/search:_query<br>[;fields:tags,title,content]</a></td>
-		        	<td>If currente users can afford for this download this method will retun a list of documents, otherwise
-		        	it'll return a lis of challenges. If no field is declared then search will consider just title field</td>
+		        	<td><a href="#repository">/repositories/_id/search:_query<br>[fields:tags|title|content]</a></td>
+		        	<td>If current users can afford for this download this method will retun a list of documents, otherwise
+		        	it'll return a list of challenges. If no field is declared then search will consider all fields</td>
+		        </tr>
+		        <tr>
+		        	<td>GET</td>
+		        	<td><a href="#repository">/repositories/_id/documents<br>{id:_id}</a></td>
+		        	<td>If user in session is admin for this repository, returns document with ID _id data, otherwise returns error 401 Unauthorized.</td>
+		        </tr>
+		        <tr>
+		        	<td>GET</td>
+		        	<td><a href="#repository">/repositories/_id/challenges</a></td>
+		        	<td>Returns a challenge.</td>
+		        </tr>
+		        <tr>
+		        	<td>GET</td>
+		        	<td><a href="#repository">/repositories/_id/document/random</a></td>
+		        	<td>Returns a random document from repository.</td>
+		        </tr>
+		        <tr>
+		        	<td>POST</td>
+		        	<td><a href="#repository">/repositories/_id/join</a></td>
+		        	<td>Suscribe user in session to repository with ID _id, 
+		        	if no user is in session returns 405 Method Not Allowed error.</td>
+		        </tr>
+		        <tr>
+		        	<td>POST</td>
+		        	<td><a href="#repository">/repositories/_id/documents<br>{tile:_title; content: _content | file: _file | tag: _tag}</a></td>
+		        	<td>Creates a new document from data in params</td>
+		        </tr>
+		        <tr>
+		        	<td>POST</td>
+		        	<td><a href="#repository">/repositories/_id/challenges<br>{id:_id;answer:a|b}</a></td>
+		        	<td>Checks user answer and returns a list of documents. </td>
+		        </tr>
+		        <tr>
+		        	<td>PUT</td>
+		        	<td><a href="#repository">/repositories/_id/documents<br>{id:_id;[tile:_title | content: _content]}</a></td>
+		        	<td>If user in session is admin for this repository, updates document data, otherwise returns error 401 Unauthorized.</td>
+		        </tr>
+		        <tr>
+		        	<td>PUT</td>
+		        	<td><a href="#repository">/repositories/_id/challenges<br>{id:_id;answer:a|b}</a></td>
+		        	<td>Checks user answer and save result.</td>
+		        </tr>
+		        <tr>
+		        	<td>DELETE</td>
+		        	<td><a href="#repository">/repositories</a></td>
+		        	<td>Returns 403 Forbidden Error.</td>
+		        </tr>
+		        <tr>
+		        	<td>DELETE</td>
+		        	<td><a href="#repository">/repositories/_id</a></td>
+		        	<td>Deletes repository _id when logged user  is admin, else returns 403 Forbidden Error.</td>
 		        </tr>
 	        </table>
+	        
+	        <h4>Methods for User</h4>
+	        <table>
+	        	<tr>
+	        		<th>Method</th>
+	        		<th>Resource</th>
+	        		<th>Description</th>
+		        </tr>
+		        <tr>
+		        	<td>GET</td>
+		        	<td><a href="#repository">/users<br>{email:_value}</a></td>
+		        	<td>Shows user with email _value data.</td>
+		        </tr>
+		        <tr>
+		        	<td>GET</td>
+		        	<td><a href="#repository">/users/repositories<br>{email:_value}</a></td>
+		        	<td>Lists all repositories where user with email _value is suscribed.</td>
+		        </tr>
+		        <tr>
+		        	<td>POST</td>
+		        	<td><a href="#repository">/users<br>{email:_email; password:_pass; name:_name [lastname:_lastname]}</a></td>
+		        	<td>Creates a new user from data given in parameters.</td>
+		        </tr>
+		        
+		        <tr>
+		        	<td>POST</td>
+		        	<td><a href="#repository">/users/login<br>{email:_email; password:_pass}</a></td>
+		        	<td>Starts a new session for user with email _email. If password doesn't match returns error 401 Unauthorized.</td>
+		        </tr>
+		        <tr>
+		        	<td>PUT</td>
+		        	<td><a href="#repository">/users<br>{email:_email | password:_pass; new_password:_newpass | name:_name | lastname:_lastname}</a></td>
+		        	<td>Shows user with email _value data.</td>
+		        </tr>
+		        <tr>
+		        	<td>DELETE</td>
+		        	<td><a href="#repository">/users</a></td>
+		        	<td>Returns error 403 Forbidden</td>
+		        </tr>
+		        
+	        </table>
+	        
+	        
 	  </div>
 	  <div id="representation">
 	  </div>
