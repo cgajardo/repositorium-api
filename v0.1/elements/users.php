@@ -3,6 +3,7 @@ class Users{
 	
 	public static function add(){
 		// TODO: check email is unique!!!
+		// TODO: RepositoriesUser and CriteriasUser MASSCREATE
 		$User = new User();
 		//check for minimum set of data
 		if(!isset($_POST['name']) or !isset($_POST['email']) or !isset($_POST['password'])){

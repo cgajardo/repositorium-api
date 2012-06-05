@@ -83,6 +83,11 @@ class Repositories{
 			return $challenges;
 		}
 	}
+	
+	public static function getRandomDocument($id){
+		$document = DAOFactory::getDocumentsDAO()->getRandom($id);
+		return $document;
+	}
 
 }
 ?>

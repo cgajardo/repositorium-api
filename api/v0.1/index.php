@@ -18,6 +18,7 @@ getRoute()->get('/', 'showVersion');
 getRoute()->get('/repositories', array('Repositories', 'index'), EpiApi::external);
 getRoute()->get('/repositories/(\d+)', array('Repositories','show'), EpiApi::external);
 getRoute()->get('/repositories/(\d+)/stats', array('Repositories','showStats'), EpiApi::external);
+getRoute()->get('/repositories/(\d+)/random', array('Repositories','getRandomDocument'), EpiApi::external);
 getRoute()->get('/repositories/(\d+)/users', array('Repositories','showUsers'), EpiApi::external);
 getRoute()->get('/repositories/(\d+)/search:([^/]+);fields:((tags,?|title,?|content,?)*)',array('Repositories','search'), EpiApi::external);
 getRoute()->get('/repositories/(\d+)/search:([^/]+)', array('Repositories','search'), EpiApi::external);

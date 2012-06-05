@@ -8,6 +8,17 @@ class DocumentsMySqlDAO implements DocumentsDAO{
 
 /** Public functions **/
 	
+	public function getRandom($repository_id){
+		$sql = "SELECT d.id, d.title, d.content, d.created, d.user_id ".
+				"FROM documents as d, tags as t ".
+				"WHERE d.id = t.document_id AND repository_id = ? ORDER BY RAND() LIMIT 1";
+		
+		$sqlQuery = new SqlQuery($sql);
+		$sqlQuery->setNumber($repository_id);
+		
+		return $this->getRow($sqlQuery);
+	}
+	
 	public function queryForChallenge($criteria_id, $total){
 		$sql = "SELECT d.id, d.title, d.content, d.created, d.user_id ".
 				"FROM documents AS d, criterias_documents AS cd ".

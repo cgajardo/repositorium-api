@@ -14,7 +14,14 @@ interface DocumentsDAO{
 	 * @param string $filters
 	 * @param int $limit
 	 */
-	public function search($repository_id, $filters, $limit);	
+	public function search($repository_id, $filters, $limit);
+
+	/**
+	 * Returns a random document from referenced repository
+	 * 
+	 * @param int $repository_id
+	 */
+	public function getRandom($repository_id);
 	
 }
 ?>
