@@ -8,6 +8,33 @@ class RepositoriesMySqlDAO implements RepositoriesDAO{
 
 /** Public functions **/
 	
+	public function getNumberOfCriterion($repository_id){
+		$sql = "SELECT count(*) FROM criterias where repository_id = ?";
+		$sqlQuery = new SqlQuery($sql);
+		$sqlQuery->setNumber($repository_id);
+		
+		return $this->querySingleResult($sqlQuery);
+	}
+	
+	public function getNumberOfDocuments($repository_id){
+	
+		$sql = "SELECT count(*) FROM documents WHERE repository_id = ?";
+		$sqlQuery = new SqlQuery($sql);
+		$sqlQuery->setNumber($repository_id);
+	
+		return $this->querySingleResult($sqlQuery);
+	}
+	
+	
+	public function getNumberOfUsers($repository_id){
+		$sql = "SELECT count(*) FROM repositories_users where repository_id = ?";
+	
+		$sqlQuery = new SqlQuery($sql);
+		$sqlQuery->setNumber($repository_id);
+	
+		return $this->querySingleResult($sqlQuery);
+	}
+	
 	public function queryForUser($email){
 		$sql = "SELECT * from repositories WHERE id IN (".
 					"SELECT repository_id FROM repositories_users WHERE user_id IN (".

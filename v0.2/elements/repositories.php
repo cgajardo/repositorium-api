@@ -28,7 +28,13 @@ class Repositories{
 	}
 	
 	public static function showStats($id){
-		//TODO: define stats
+		$stat = new Stat();
+		
+		$stat->users = DAOFactory::getRepositoriesDAO()->getNumberOfUsers($id);
+		$stat->documents= DAOFactory::getRepositoriesDAO()->getNumberOfDocuments($id);
+		$stat->criterion = DAOFactory::getRepositoriesDAO()->getNumberOfCriterion($id);
+		
+		return $stat->toArray();
 	}
 	
 	

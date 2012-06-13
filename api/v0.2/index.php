@@ -29,8 +29,10 @@ getRoute()->post('/repositories/(\d+)/join', array('Repositories', 'join'), EpiA
 getRoute()->post('/repositories/(\d+)/documents', array('Repositories','addDocument'), EpiApi::external);
 getRoute()->post('/repositories/(\d+)/challenge', array('Challenges', 'submit'), EpiApi::external);
 
-//repositories-post
-getRoute()->get('/repositories/(\d+)/documents', array('Repositories','getDocument'), EpiApi::external);
+//repositories-put
+//TODO por que no tiene su propia clase documento? ah?
+getRoute()->get('/repositories/(\d+)/documents', array('Repositories','updateDocument'), EpiApi::external);
+
 
 //repositories-delete
 getRoute()->delete('/repositories', 'Forbidden');

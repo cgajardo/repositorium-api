@@ -26,5 +26,6 @@
 	require_once('../v0.2/model/mysql/ChallengesMySqlDAO.class.php');
 	
 	require_once('../v0.2/model/dto/Error.class.php');
+	require_once('../v0.2/model/dto/Stat.class.php');
 
 ?>
