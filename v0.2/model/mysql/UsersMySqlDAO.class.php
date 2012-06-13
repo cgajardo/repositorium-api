@@ -10,7 +10,7 @@ class UsersMySqlDAO implements UsersDAO{
 	
 	public function joinRepository($repo_id, $user_id){
 		$sql = "INSERT INTO repositories_users(repository_id, user_id, points, watching) ".
-			"VALUES ($, $, 0, 0)";
+			"VALUES (?, ?, 0, 0)";
 		
 		$sqlQuery = new SqlQuery($sql);
 		$sqlQuery->setNumber($repo_id);
@@ -131,7 +131,7 @@ class UsersMySqlDAO implements UsersDAO{
 	public function getByRepositoryId($id){
 		$sql = "SELECT u.id, u.email, u.first_name, u.last_name, u.created, u.active 
 				FROM users AS u JOIN repositories_users AS ru ON ru.user_id = u.id 
-				WHERE ru.repository_id = ?";
+				WHERE ru.repository_id = ? GROUP BY u.id";
 		
 		$sqlQuery = new SqlQuery($sql);
 		

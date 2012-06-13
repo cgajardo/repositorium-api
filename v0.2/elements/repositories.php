@@ -88,8 +88,17 @@ class Repositories{
 	}
 	
 	public static function getRandomDocument($id){
-		//TODO: user must be logged in order to discount point of this download
+		
+		$User = getSession()->get('user');
+		//there's no user in session
+		if($User == null){
+			return returnError('401 Unauthorized','User must be logged in');
+		}
+		
 		$document = DAOFactory::getDocumentsDAO()->getRandom($id);
+		
+		DAOFactory::getUsersDAO()->substractPoints($id, $User->id);
+		
 		return $document;
 	}
 	
@@ -108,13 +117,14 @@ class Repositories{
 			return returnError('401 Unauthorized','This action can only be performed by admin users');
 		}
 		
-		$document = DAOFactory::getDocumentsDAO()->load($docId);
+
+		$document = DAOFactory::getDocumentsDAO()->load($docId);		
 		
 		if($document == null){
 			return returnError('404 Not Found','Document with id '.$docId.' was not found');
 		}
 		
-		return $document->toArray();
+		return $document;
 	}
 	
 	public static function getChallenge($id){

@@ -66,7 +66,7 @@ class DocumentsMySqlDAO implements DocumentsDAO{
 	/**
 	 * Read row
 	 *
-	 * @return Repository
+	 * @return Document
 	 */
 	protected function readRow($row){
 		$document = new Document();
@@ -95,7 +95,7 @@ class DocumentsMySqlDAO implements DocumentsDAO{
 	/**
 	 * Get row
 	 *
-	 * @return BadgesMySql 
+	 * @return Document 
 	 */
 	protected function getRow($sqlQuery){
 		$tab = QueryExecutor::execute($sqlQuery);

@@ -64,49 +64,45 @@ class Users{
 		return $user;
 	}
 	
-	public static function update($email){
+	public static function update($id){
 		//trying to bypass PHP missing support for PUT and DELETE
 		$_PUT = array();
 		parse_str(file_get_contents('php://input'), $_PUT);
 		
-		$user = DAOFactory::getUsersDAO()->queryByEmail($email);
-		if($user==null){
-			header('HTTP/1.1 400 Bad Request');
-			return array(
-					"status"=>"400 Bad Request", 
-					"message"=>"User with email ".$email
-						." was not found. If you want to create an user, try doin a POST to /users");
-		}
+		$User = getSession()->get('user');
+		
+		if($User == null)
+			return returnError('401 Unauthorized','User must be logged in');
+		
+		if($User->id != $id)
+			return returnError('401 Unauthorized',"User id doesn't match user in session");
 		
 		if(isset($_PUT['name']))
-			$user->name = $_PUT['name'];
+			$User->name = $_PUT['name'];
 
 		if(isset($_PUT['lastname']))
-			$user->lastname = $_PUT['lastname'];
+			$User->lastname = $_PUT['lastname'];
 			
 		if(isset($_PUT['new_password']) && isset($_PUT['password'])){
 			
 			$checkPassword = array( 'self', 'checkPassword' );
-			if(call_user_func( $checkPassword, $user->id, $password)){
-				$salt = DAOFactory::getUsersDAO()->getUserSalt($user->id);
+			if(call_user_func( $checkPassword, $User->id, $password)){
+				$salt = DAOFactory::getUsersDAO()->getUserSalt($User->id);
 				$newPassword = sha1($_PUT['new_password'].$salt);
-				DAOFactory::getUsersDAO()->updatePassword($user->id,$newPassword);
+				DAOFactory::getUsersDAO()->updatePassword($User->id,$newPassword);
 				
 			}else{
-				header('HTTP/1.1 401 Unauthorized');
-				$Error = new Error();
-				$Error->status = "401 Unauthorized";
-				$Error->message = "Incorrect Password";
-				return $Error->toArray();
+				return returnError('401 Unauthorized','Incorrect Password');
 			}
 		}
 		
 		//finally we update User data and the user in session
-		DAOFactory::getUsersDAO()->update($user);
-		getSession()->set('user', $user);
+		DAOFactory::getUsersDAO()->update($User);
+		getSession()->set('user', $User);
 	}
 	
 	public static function loadRepositories($email){
+		//TODO: improve this!
 		return DAOFactory::getRepositoriesDAO()->queryForUser($email);
 	}
 	
