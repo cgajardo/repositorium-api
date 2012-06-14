@@ -8,6 +8,15 @@ class UsersMySqlDAO implements UsersDAO{
 
 /** Public functions **/
 	
+	public function asociateCriteria($user_id, $criteria){
+		$sql = "INSERT INTO criterias_users(user_id, criteria_id, challenge_size) VALUES (?, ?, 1)";
+		$sqlQuery = new SqlQuery($sql);
+		$sqlQuery->setNumber($user_id);
+		$sqlQuery->setNumber($criteria);
+		
+		return $this->executeInsert($sqlQuery);
+	}
+	
 	public function joinRepository($repo_id, $user_id){
 		$sql = "INSERT INTO repositories_users(repository_id, user_id, points, watching) ".
 			"VALUES (?, ?, 0, 0)";

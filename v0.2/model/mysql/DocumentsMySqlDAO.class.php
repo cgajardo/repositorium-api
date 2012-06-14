@@ -8,6 +8,30 @@ class DocumentsMySqlDAO implements DocumentsDAO{
 
 /** Public functions **/
 	
+	public function insert($Document, $repo_id){
+		$sql = "INSERT INTO documents (title, content, user_id, created, modified, repository_id) ".
+				"VALUES (?, ?, ?, ?, ?, ?)";
+		$sqlQuery = new SqlQuery($sql);
+		$sqlQuery->setString($Document->title);
+		$sqlQuery->setString($Document->content);
+		$sqlQuery->setNumber($Document->author);
+		$sqlQuery->setString($Document->created);
+		$sqlQuery->setString($Document->created);
+		$sqlQuery->setNumber($repo_id);
+		
+		$id = $this->executeInsert($sqlQuery);
+		
+		//if documen has tags, add them
+		if($Document->tags != null){
+			//TODO: add tags
+		}
+		
+		//if document has files, add them
+		if($Document->files != null){
+				//TODO: add files
+		}
+	}
+	
 	public function load($document_id){
 		$sql = "SELECT d.id, d.title, d.content, d.created, d.user_id ".
 				"FROM documents as d, tags as t ".

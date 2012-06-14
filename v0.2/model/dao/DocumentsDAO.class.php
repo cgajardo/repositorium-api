@@ -8,6 +8,14 @@
 interface DocumentsDAO{
 	
 	/**
+	 * Add a new document
+	 * 
+	 * @param Document $Document
+	 * @param int $repo_id
+	 */
+	public function insert($Document, $repo_id);
+	
+	/**
 	 * Returns data for document with ID $document_id
 	 * 
 	 * @param int $document_id

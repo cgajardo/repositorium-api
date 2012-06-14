@@ -2,25 +2,24 @@
 class Users{
 	
 	public static function add(){
-		// TODO: check email is unique!!!
-		// TODO: RepositoriesUser and CriteriasUser MASSCREATE
+		
 		$User = new User();
 		//check for minimum set of data
-		if(!isset($_POST['name']) or !isset($_POST['email']) or !isset($_POST['password'])){
-			header('HTTP/1.1 488 Incomplete request');
-			$Error = new Error();
-			$Error->status = "488 Incomplete request";
-			$Error->message = "Please provide email, name and password";
-			return $Error->toArray();
-		}
+		if(!isset($_POST['name']) or !isset($_POST['email']) or !isset($_POST['password']))
+			return returnError('488 Incomplete request','Please provide email, name and password');
+		
+		$existent = DAOFactory::getUsersDAO()->queryByEmail($_POST['email']);
+		if($existent!=null)
+			return returnError('400 Bad Request','User already existe. Try with another email.');
 		
 		$User->email = $_POST['email'];
 		$User->name = $_POST['name'];
 		$User->lastname = $_POST['lastname'];
 		
 		$id = DAOFactory::getUsersDAO()->add($User, $_POST['password']);
+		
 		$newUser = DAOFactory::getUsersDAO()->load($id);
-		return $newUser->toArray();
+		return $newUser;
 	}
 
 	public static function login(){

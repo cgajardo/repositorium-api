@@ -8,6 +8,21 @@ class RepositoriesMySqlDAO implements RepositoriesDAO{
 
 /** Public functions **/
 	
+	public function getCriterion($repository_id){
+		$sql = "SELECT id FROM criterias WHERE repository_id = ?";
+		$sqlQuery = new SqlQuery($sql);
+		$sqlQuery->setNumber($repository_id);
+		
+		$rows = $this->execute($sqlQuery);
+		
+		$ret = array();
+		for($i=0;$i<count($rows);$i++){
+			$ret[$i] = $rows[$i]['id'];
+		}
+		
+		return $ret;
+	}
+	
 	public function getNumberOfCriterion($repository_id){
 		$sql = "SELECT count(*) FROM criterias where repository_id = ?";
 		$sqlQuery = new SqlQuery($sql);

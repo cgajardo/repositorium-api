@@ -3,6 +3,7 @@
 /**
 * source http://stackoverflow.com/questions/1397036
 */
+
 function array_to_xml($array, &$xml) {
 	foreach($array as $key => $value) {
 		if(is_array($value)) {
@@ -16,9 +17,6 @@ function array_to_xml($array, &$xml) {
 	}
 }
 
-/**
- * TODO: documentame!!
- */
 function returnError($code, $message){
 	$Error = new Error();
 	$Error->status = $code;

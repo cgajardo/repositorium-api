@@ -8,6 +8,55 @@ class ChallengesMySqlDAO implements ChallengesDAO{
 
 /** Public functions **/
 	
+	
+	public function updateVoteA($repo_id, $criteria_id, $doc_id, $user_id){
+		$sql = "UPDATE criterias_documents ".
+				"SET total_answers_1 = total_answers_1+1 ".
+				"WHERE document_id = ? AND criteria_id = ?";
+		
+		$sqlQuery = new SqlQuery($sql);
+		$sqlQuery->setNumber($doc_id);
+		$sqlQuery->setNumber($criteria_id);
+		
+		$this->executeUpdate($sqlQuery);
+		
+		//Update user data
+		$correct = $this->getCorrectAnswer($criteria_id, $doc_id);
+		
+		//update user point
+		$sql = "UPDATE repositories_users ".
+				"SET points = points + (SELECT challenge_reward FROM criterias WHERE id = ?) ".
+				"WHERE user_id = ? AND repository_id = ?";
+		$sqlQuery = new SqlQuery($sql);
+		$sqlQuery->setNumber($criteria_id);
+		$sqlQuery->setNumber($user_id);
+		$sqlQuery->setNumber($repo_id);
+		$this->executeUpdate($sqlQuery);
+		
+		//TODO: update users package size
+		//if correct answer
+		if($correct == null || $correct == 1){
+			
+			
+		}else{
+			
+			
+		}
+		
+	}
+	
+	public function getCorrectAnswer($criteria_id, $doc_id){
+		$sql = "SELECT official_answer ".
+				"FROM repo.criterias_documents ".
+				"WHERE criteria_id = ? AND document_id = ?";
+		
+		$sqlQuery = new SqlQuery($sql);
+		$sqlQuery->setNumber($criteria_id);
+		$sqlQuery->setNumber($doc_id);
+		
+		return $this->querySingleResult($sqlQuery);	
+	}
+	
 	public function getChallenges($repository_id, $user_id){
 		
 		//get a random criteria in the repository
@@ -30,8 +79,6 @@ class ChallengesMySqlDAO implements ChallengesDAO{
 		}
 		
 		$challenge = $row[0];
-		
-		return $challenge['id'];
 		
 		//get challenge size for user in this criteria
 		$sql = "SELECT challenge_size AS size ".

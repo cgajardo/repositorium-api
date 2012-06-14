@@ -7,6 +7,24 @@
  */
 interface UsersDAO{
 	
+	/**
+	 * Asociates an user with a criteria
+	 * 
+	 * @param int $user_id
+	 * @param int $criteria
+	 */
+	public function asociateCriteria($user_id, $criteria);
+	
+	
+	/**
+	 * Asociates an user with a repository
+	 * 
+	 * @param int $repo_id
+	 * @param int $user_id
+	 */
+	public function joinRepository($repo_id, $user_id);
+	
+	
 	/** 
 	 * Substract points from user in a repository
 	 * 

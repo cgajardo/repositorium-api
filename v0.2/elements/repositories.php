@@ -46,7 +46,6 @@ class Repositories{
 	public static function search($id, $query){
 		
 		$User = getSession()->get('user');
-		$fields = $_GET['fields'];
 		//there's no user in session
 		if($User == null){
 			return returnError('401 Unauthorized','User must be logged in');
@@ -54,7 +53,8 @@ class Repositories{
 		
 		//user can afford this search
 		if($User->canAfford($id)){
-			if($fields != null){
+			if(isset($_GET['fields'])){
+				$fields = $_GET['fields'];
 				$search  = array("tags", "title", "content", ",");
 				$replace = array("tag LIKE '%".$query."%'", "title LIKE '%".$query."%'", "content LIKE '%".$query."%'", " OR ");
 				$filter = str_replace($search, $replace, $fields);
@@ -87,89 +87,7 @@ class Repositories{
 		}
 	}
 	
-	public static function getRandomDocument($id){
-		
-		$User = getSession()->get('user');
-		//there's no user in session
-		if($User == null){
-			return returnError('401 Unauthorized','User must be logged in');
-		}
-		
-		$document = DAOFactory::getDocumentsDAO()->getRandom($id);
-		
-		DAOFactory::getUsersDAO()->substractPoints($id, $User->id);
-		
-		return $document;
-	}
 	
-	public static function getDocument($id){
-		//no id in request
-		if(!isset($_GET['id'])){
-			return returnError('488 Missing parameter','Document id parameter expected');
-		}
-		$docId = $_GET['id'];
-		$User = getSession()->get('user');
-		//there's no user in session
-		if($User == null){
-			return returnError('401 Unauthorized','User must be logged in');
-		}
-		if(!$User->isAdmin($id)){
-			return returnError('401 Unauthorized','This action can only be performed by admin users');
-		}
-		
-
-		$document = DAOFactory::getDocumentsDAO()->load($docId);		
-		
-		if($document == null){
-			return returnError('404 Not Found','Document with id '.$docId.' was not found');
-		}
-		
-		return $document;
-	}
-	
-	public static function getChallenge($id){
-		$User = getSession()->get('user');
-		//there's no user in session
-		if($User == null){
-			return returnError('401 Unauthorized','User must be logged in');
-		}
-			
-		$challenges = DAOFactory::getChallengesDAO()->getChallenges($id,$User->id);
-			
-		//return a challenge for this user
-		//TODO: review this, should be more like $challenges->toArray()
-		return $challenges;	
-	}
-	
-	
-	public static function addDocument($id){
-		
-		$User = getSession()->get('user');
-		//there's no user in session
-		if($User == null)
-			return returnError('401 Unauthorized','User must be logged in');
-		
-		//{title:_title; content: _content | file: _file | tag: _tag}
-		if(!isset($_POST['title']) || !isset($_POST['content'])){
-			return returnError('488 Missing parameter','Title and content are required');
-		}
-		
-		$Document = new Document();
-		$Document->author = $User->id;
-		$Document->title = $_POST['title'];
-		$Document->content = $_POST['content'];
-		//TODO: get today date
-		//$Document->created = TODAY
-		if(isset($_POST['file'])){
-			$Document->file = $_POST['file'];
-		}
-		if(isset($_POST['tag'])){
-			$Document->tag = $_POST['tag'];
-		}
-		//TODO: call MySQLDAO to save this document!!!!
-		
-		
-	}
 	
 	public function join($id){
 		$User = getSession()->get('user');
@@ -177,9 +95,13 @@ class Repositories{
 		if($User == null)
 			return returnError('401 Unauthorized','User must be logged in');
 		
-		$id = DAOFactory::getUsersDAO()->joinRepository($id, $User->id);
+		$joinId = DAOFactory::getUsersDAO()->joinRepository($id, $User->id);
+		$criterion = DAOFactory::getRepositoriesDAO()->getCriterion($id);
+		foreach ($criterion as $criteria){
+			DAOFactory::getUsersDAO()->asociateCriteria($User->id, $criteria);
+		}
 		
-		//TODO: should i return the id?
+		
 		
 	}
 
