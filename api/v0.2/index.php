@@ -24,7 +24,7 @@ getRoute()->get('/repositories/(\d+)/users', array('Repositories','showUsers'), 
 getRoute()->get('/repositories/(\d+)/search:([^/]+)', array('Repositories','search'), EpiApi::external);
 getRoute()->get('/repositories/(\d+)/documents', array('Documents','getDocument'), EpiApi::external);
 getRoute()->get('/repositories/(\d+)/documents/random', array('Documents','getRandomDocument'), EpiApi::external);
-getRoute()->get('/repositories/(\d+)/challenges', array('Challenges','getChallenge'), EpiApi::external);
+getRoute()->get('/repositories/(\d+)/challenges', array('Challenges','get'), EpiApi::external);
 
 //repositories-post
 getRoute()->post('/repositories/(\d+)/join', array('Repositories', 'join'), EpiApi::external);
@@ -41,12 +41,12 @@ getRoute()->delete('/repositories/(\d+)', 'Forbidden');
 getRoute()->delete('/repositories/(\d+)/users', 'Forbidden');
 
 /** users **/
-//users-post
-getRoute()->post("/users", array('Users', 'add'), EpiApi::external);
-getRoute()->post("/users/login", array('Users', 'login'), EpiApi::external);
 //users-get
 getRoute()->get("/users/([^/]+)", array('Users', 'load'), EpiApi::external);
 getRoute()->get("/users/([^/]+)/repositories", array('Users', 'loadRepositories'), EpiApi::external);
+//users-post
+getRoute()->post("/users", array('Users', 'add'), EpiApi::external);
+getRoute()->post("/users/login", array('Users', 'login'), EpiApi::external);
 //users-put
 getRoute()->put("/users/([^/]+)", array('Users', 'update'), EpiApi::external);
 //users-delete

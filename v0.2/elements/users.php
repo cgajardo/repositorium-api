@@ -101,7 +101,6 @@ class Users{
 	}
 	
 	public static function loadRepositories($email){
-		//TODO: improve this!
 		return DAOFactory::getRepositoriesDAO()->queryForUser($email);
 	}
 	
@@ -115,6 +114,10 @@ class Users{
 			return true;
 		//else
 		return false;
+	}
+	
+	public static function logout(){
+		session_destroy();
 	}
 
 }

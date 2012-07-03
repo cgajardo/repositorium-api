@@ -38,7 +38,7 @@ class Challenges{
 	}
 	
 	
-	public static function getChallenge($repo_id){
+	public static function get($repo_id){
 		$User = getSession()->get('user');
 		//there's no user in session
 		if($User == null){

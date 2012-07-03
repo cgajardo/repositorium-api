@@ -24,13 +24,12 @@
 		
 		
 		/**
-		* returns a repository object mapped to an array
+		* returns a document object mapped to an array
 		*/
 		public function toArray(){
-			//TODO: improve tags and files
 			return array("title"=>$this->title, "content"=>$this->content, 
-					"author"=>$this->author->toArray(), "created"=>$this->created,"files"=>array($files),
-					"tags"=>array($tags));
+					"author"=>$this->author->toArray(), "created"=>$this->created,"files"=>$this->files,
+					"tags"=>$this->tags);
 		}
 		
 	}

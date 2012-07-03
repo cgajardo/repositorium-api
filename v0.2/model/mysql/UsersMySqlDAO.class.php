@@ -78,7 +78,6 @@ class UsersMySqlDAO implements UsersDAO{
 		$sqlQuery->setString($user->lastname);
 		$sqlQuery->setNumber($user->id);
 		
-		//TODO:should I do something with this?
 		$row_affected = $this->executeUpdate($sqlQuery);
 	}
 	

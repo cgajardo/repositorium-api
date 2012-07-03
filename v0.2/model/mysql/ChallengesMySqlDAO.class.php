@@ -33,14 +33,77 @@ class ChallengesMySqlDAO implements ChallengesDAO{
 		$sqlQuery->setNumber($repo_id);
 		$this->executeUpdate($sqlQuery);
 		
-		//TODO: update users package size
+		$this->updatePackageSize($correct, $criteria_id, $user_id);
+		
+	}
+	
+	public function updateVoteB($repo_id, $criteria_id, $doc_id, $user_id){
+		$sql = "UPDATE criterias_documents ".
+				"SET total_answers_2 = total_answers_2+1 ".
+				"WHERE document_id = ? AND criteria_id = ?";
+	
+		$sqlQuery = new SqlQuery($sql);
+		$sqlQuery->setNumber($doc_id);
+		$sqlQuery->setNumber($criteria_id);
+	
+		$this->executeUpdate($sqlQuery);
+	
+		//Update user data
+		$correct = $this->getCorrectAnswer($criteria_id, $doc_id);
+	
+		//update user point
+		$sql = "UPDATE repositories_users ".
+				"SET points = points + (SELECT challenge_reward FROM criterias WHERE id = ?) ".
+				"WHERE user_id = ? AND repository_id = ?";
+		$sqlQuery = new SqlQuery($sql);
+		$sqlQuery->setNumber($criteria_id);
+		$sqlQuery->setNumber($user_id);
+		$sqlQuery->setNumber($repo_id);
+		$this->executeUpdate($sqlQuery);
+	
+		$this->updatePackageSize($correct, $criteria_id, $user_id);
+	
+	}
+	
+	private function updatePackageSize($correct = null , $criteria_id, $user_id){
 		//if correct answer
 		if($correct == null || $correct == 1){
-			
-			
+			$sql = "UPDATE criterias_users ".
+					"SET challenge_size = LEAST(".
+					"GREATEST(".
+					"(SELECT depenalization_a FROM criterias WHERE id = ?)*challenge_size + ".
+					"(SELECT depenalization_b FROM criterias WHERE id = ?),".
+					"(SELECT minchallenge_size FROM criterias WHERE id = ?)),".
+					"(SELECT maxchallenge_size FROM criterias WHERE id = ?)) ".
+					"WHERE criteria_id = ? AND user_id = 1";
+				
+			$sqlQuery = new SqlQuery($sql);
+			$sqlQuery->setNumber($criteria_id);
+			$sqlQuery->setNumber($criteria_id);
+			$sqlQuery->setNumber($criteria_id);
+			$sqlQuery->setNumber($criteria_id);
+			$sqlQuery->setNumber($criteria_id);
+			$sqlQuery->setNumber($user_id);
+			$this->executeUpdate($sqlQuery);
 		}else{
-			
-			
+			$sql = "UPDATE criterias_users ".
+					"SET challenge_size = LEAST(".
+					"GREATEST(".
+					"(SELECT penalization_a FROM criterias WHERE id = ?)*challenge_size + ".
+					"(SELECT penalization_b FROM criterias WHERE id = ?),".
+					"(SELECT minchallenge_size FROM criterias WHERE id = ?)),".
+					"(SELECT maxchallenge_size FROM criterias WHERE id = ?)) ".
+					"WHERE criteria_id = ? AND user_id = 1";
+		
+			$sqlQuery = new SqlQuery($sql);
+			$sqlQuery->setNumber($criteria_id);
+			$sqlQuery->setNumber($criteria_id);
+			$sqlQuery->setNumber($criteria_id);
+			$sqlQuery->setNumber($criteria_id);
+			$sqlQuery->setNumber($criteria_id);
+			$sqlQuery->setNumber($user_id);
+			$this->executeUpdate($sqlQuery);
+				
 		}
 		
 	}
@@ -91,7 +154,6 @@ class ChallengesMySqlDAO implements ChallengesDAO{
 		$row = QueryExecutor::execute($sqlQuery);
 		$size = $row[0]['size'];
 		
-		//TODO: proporci—n de validados y no validados???
 		$documents = DAOFactory::getDocumentsDAO()->queryForChallenge($challenge['id'], $size);
 		
 		//ERROR: no enough documents
@@ -133,15 +195,15 @@ class ChallengesMySqlDAO implements ChallengesDAO{
 /** Private functions **/
 	
 	/**
+	 * @deprecated
+	 * 
 	 * Read row
-	 *
 	 * @return Challenge
 	 */
 	protected function readRow($row){
 		$Challenge = new Challenge();
 		$Challenge->question = $row['question'];
-		//TODO: do document load;
-		//$Challenge->documents = array(DAOFactory::getDocumentsDAO()->load());
+		$Challenge->documents = null;
 		$Challenge->answera = $row['answera'];
 		$Challenge->answerb = $row['answerb'];
 		

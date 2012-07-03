@@ -101,8 +101,6 @@ class Repositories{
 			DAOFactory::getUsersDAO()->asociateCriteria($User->id, $criteria);
 		}
 		
-		
-		
 	}
 
 

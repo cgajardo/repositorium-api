@@ -74,8 +74,9 @@ class Documents{
 		//there's no user in session
 		if($User == null)
 			return returnError('401 Unauthorized','User must be logged in');
-		
-		//TODO: user must be admin
+		if(!$User->isAdmin($repo_id))
+			return returnError('401 Unauthorized','Only admin users can perform this action');
+		//TODO!!
 		
 	}
 }

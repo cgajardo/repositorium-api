@@ -23,12 +23,35 @@ class DocumentsMySqlDAO implements DocumentsDAO{
 		
 		//if documen has tags, add them
 		if($Document->tags != null){
-			//TODO: add tags
+			foreach($Document->tags as $tag){
+				$sql = "INSERT INTO tags (document_id, tag, created, modified) ".
+						"VALUES (?,?,?,?)";
+				
+				$sqlQuery = new SqlQuery($sql);
+				$sqlQuery->setNumber($id);
+				$sqlQuery->setString($tag);
+				$sqlQuery->setString($Document->created);
+				$sqlQuery->setString($Document->created);
+				$this->executeInsert($sqlQuery);
+			}
+			
 		}
 		
 		//if document has files, add them
 		if($Document->files != null){
-				//TODO: add files
+			foreach($Document->files as $file){
+				$sql = "INSERT INTO attachfiles (filename, type, size, content, document_id) ".
+						"VALUES(?,?,?,?,?)";
+				
+				$sqlQuery = new SqlQuery($sql);
+				$sqlQuery->setString($file['filename']);
+				$sqlQuery->setString($file['type']);
+				$sqlQuery->setNumber($file['size']);
+				$sqlQuery->setNumber($id);
+				
+				$this->executeInsert($sqlQuery);
+			}
+		
 		}
 	}
 	
@@ -88,6 +111,39 @@ class DocumentsMySqlDAO implements DocumentsDAO{
 /** Private functions **/
 	
 	/**
+	 * Return the list of tags for a document
+	 * 
+	 * @param int $docId
+	 * @return array
+	 */
+	private function queryTags($docId){
+		$sql = "SELECT tag FROM tags WHERE document_id = ?";
+		$sqlQuery = new SqlQuery($sql);
+		$sqlQuery->setNumber($docId);
+		
+		$tab = QueryExecutor::execute($sqlQuery);
+		$ret = array();
+		for($i=0;$i<count($tab);$i++){
+			$ret[$i] = $tab[$i]['tag'];
+		}
+		return $ret;
+	}
+	
+	private function queryFiles($docId){
+		$sql = "SELECT filename, type, size, content FROM attachfiles WHERE document_id = ?";
+		$sqlQuery = new SqlQuery($sql);
+		$sqlQuery->setNumber($docId);
+		$tab = QueryExecutor::execute($sqlQuery);
+		$ret = array();
+		for($i=0;$i<count($tab);$i++){
+			$ret[$i] = array("filename"=>$tab[$i]['filename'],"type"=>$tab[$i]['type'], 
+					"content"=>$tab[$i]['content'], "size"=>$tab[$i]['size']);
+		}
+		return $ret;	
+	}
+	
+	
+	/**
 	 * Read row
 	 *
 	 * @return Document
@@ -100,9 +156,8 @@ class DocumentsMySqlDAO implements DocumentsDAO{
 		$document->content = $row['content']; 
 		$document->created = $row['created'];
 		$document->author = DAOFactory::getUsersDAO()->load($row['user_id'])->toArray();
-		//TODO: retrieve tags and files
-		$document->tags = null;
-		$document->files = null;
+		$document->tags = $this->queryTags($row['id']);
+		$document->files = $this->queryFiles($row['id']);
 
 		return $document;
 	}
