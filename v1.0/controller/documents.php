@@ -1,7 +1,7 @@
 <?php
 class Documents{
 	
-	public static function getRandomDocument($repo_id){
+	public static function getRandom($repo_id){
 	
 		$User = getSession()->get('user');
 		//there's no user in session
@@ -16,7 +16,7 @@ class Documents{
 		return $document;
 	}
 	
-	public static function getDocument($repo_id){
+	public static function get($repo_id){
 		//no id in request
 		if(!isset($_GET['id'])){
 			return returnError('488 Missing parameter','Document id parameter expected');
@@ -41,7 +41,7 @@ class Documents{
 		return $document;
 	}
 	
-	public static function addDocument($repo_id){
+	public static function add($repo_id){
 	
 		$User = getSession()->get('user');
 		//there's no user in session
@@ -68,7 +68,10 @@ class Documents{
 	}
 	
 	
-	public static function updateDocument($repo_id){
+	public static function update($repo_id){
+		//trying to bypass PHP missing support for PUT and DELETE
+		$_PUT = array();
+		parse_str(file_get_contents('php://input'), $_PUT);
 		
 		$User = getSession()->get('user');
 		//there's no user in session
@@ -77,11 +80,9 @@ class Documents{
 		if(!$User->isAdmin($repo_id))
 			return returnError('401 Unauthorized','Only admin users can perform this action');
 		
-		//trying to bypass PHP missing support for PUT and DELETE
-		$_PUT = array();
-		parse_str(file_get_contents('php://input'), $_PUT);
 		
-		if($_PUT['id'] == null)
+		print_r($_PUT);
+		if(!isset($_PUT['id']))
 			return returnError('488 Missing parameter','Document ID is required');
 		
 		$Document = DAOFactory::getDocumentsDAO()->load($_PUT['id']);

@@ -111,7 +111,7 @@ class EpiRoute
     {
       $method = strtolower($route['method']);
       if(isset($route['class']) && isset($route['function']))
-        $this->$method($route['path'], array($route['class'], $route['function']));
+        $this->$method($route['path'], array($route['class'], $route['function']), EpiApi::external);
       elseif(isset($route['function']))
         $this->$method($route['path'], $route['function']);
     }
