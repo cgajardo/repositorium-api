@@ -80,8 +80,6 @@ class Documents{
 		if(!$User->isAdmin($repo_id))
 			return returnError('401 Unauthorized','Only admin users can perform this action');
 		
-		
-		print_r($_PUT);
 		if(!isset($_PUT['id']))
 			return returnError('488 Missing parameter','Document ID is required');
 		
