@@ -111,6 +111,125 @@
 			        </tr>
 		        </table>
 			</div>
+			
+			<div id="challenge">
+		        <h3>Challenge</h3>
+		        <p>This element represents a Repositorium's Challenge</p>
+		        <h5>properties</h5>
+		        <table>
+			        <tr>
+		        		<th>Property</th>
+		        		<th>Description</th>
+			        </tr>
+		        	<tr>
+		        		<td>id</td>
+		        		<td>It's the identifier of the challenge. This ID must be providen when submiting an answer.</td>
+			        </tr>
+			        <tr>
+			        	<td>question</td>
+			        	<td>The question that must be answered regarding the documents attached</td>
+			        </tr>
+			        <tr>
+			        	<td>documents</td>
+			        	<td>Array of <a href="document">documents</a> for which the question must be answered.</td>
+			        </tr>
+			        <tr>
+			        	<td>answera</td>
+			        	<td>Option A for answering the question. User must decide between this option, or B</td>
+			        </tr>
+			        <tr>
+			        	<td>answerb</td>
+			        	<td>Option B for answering the question. User must decide between this option, or A</td>
+			        </tr>
+		        </table>
+			</div>
+			
+			<div id="document">
+		        <h3>Document</h3>
+		        <p>The Document element represents a document from a repository</p>
+		        <h5>properties</h5>
+		        <table>
+		        
+			        <tr>
+		        		<th>Property</th>
+		        		<th>Description</th>
+			        </tr>
+		        	<tr>
+		        		<td>id</td>
+		        		<td>It's the identifier of the documents. Real id is only available for admin users, other users will 
+		        		recieve a faked id to use when asnswering <a href="challenge">challenges</a>.</td>
+			        </tr>
+			        <tr>
+			        	<td>title</td>
+			        	<td>The title of the document.</td>
+			        </tr>
+			        <tr>
+			        	<td>content</td>
+			        	<td>Text content of the document.</td>
+			        </tr>
+			        <tr>
+			        	<td>author</td>
+			        	<td>An <a href="user">user</a> element representing the author of the document.</td>
+			        </tr>
+			        <tr>
+			        	<td>created</td>
+			        	<td>Date when the document was created.</td>
+			        </tr>
+			        <tr>
+			        	<td>files</td>
+			        	<td>Array of files attached to the document.</td>
+			        </tr>
+			        <tr>
+			        	<td>tags</td>
+			        	<td>Array of tags that describe the document.</td>
+			        </tr>
+		        </table>
+			</div>
+			
+			<div id="stat">
+		        <h3>Stat</h3>
+		        <p>This element represents the stats of a repository</p>
+		        <h5>properties</h5>
+		        <table>
+			        <tr>
+		        		<th>Property</th>
+		        		<th>Description</th>
+			        </tr>
+		        	<tr>
+		        		<td>users</td>
+		        		<td>Number os users participating on geiven a repository.</td>
+			        </tr>
+			        <tr>
+			        	<td>documents</td>
+			        	<td>Number of documents in a given repository.</td>
+			        </tr>
+			        <tr>
+			        	<td>criterion</td>
+			        	<td>Number of criterion in a given repository.</td>
+			        </tr>
+		        </table>
+			</div>
+			
+			<div id="error">
+		        <h3>Error</h3>
+		        <p>This element is used for reporting Server Errors (5XX), Client Errors (4XX) or Success (2XX)</p>
+		        <h5>properties</h5>
+		        <table>
+			        <tr>
+		        		<th>Property</th>
+		        		<th>Description</th>
+			        </tr>
+		        	<tr>
+		        		<td>status</td>
+		        		<td>Status code and name.</td>
+			        </tr>
+			        <tr>
+			        	<td>message</td>
+			        	<td>Brief explanation of the error.</td>
+			        </tr>
+		        </table>
+			</div>
+
 	  </div>
 	  <div id="representation">
 	  </div>
