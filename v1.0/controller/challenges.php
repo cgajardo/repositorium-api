@@ -11,9 +11,6 @@ class Challenges{
 		if($User == null)
 			return returnError('401 Unauthorized','User must be logged in');
 		
-		$challenge_id = $_POST['id'];
-		$answer = $_POST['id'];
-		
 		$idChallenge = $_POST['id'];
 		$challengeData = getSession()->get($idChallenge);
 		$realIdChallenge = $challengeData['idcriteria'];

@@ -8,6 +8,23 @@ class RepositoriesMySqlDAO implements RepositoriesDAO{
 
 /** Public functions **/
 	
+	public function getTags($repository_id){
+		$sql = "SELECT DISTINCT(tag) ".
+			"FROM tags AS t, documents AS d, repositories AS r ".
+			"WHERE d.id = t.document_id AND d.repository_id = r.id AND r.id = ?";
+		$sqlQuery = new SqlQuery($sql);
+		$sqlQuery->setNumber($repository_id);
+		
+		$rows = $this->execute($sqlQuery);
+		
+		$ret = array();
+		for($i=0;$i<count($rows);$i++){
+			$ret[$i] = $rows[$i]['tag'];
+		}
+		
+		return $ret;
+	}
+	
 	public function getCriterion($repository_id){
 		$sql = "SELECT id FROM criterias WHERE repository_id = ?";
 		$sqlQuery = new SqlQuery($sql);

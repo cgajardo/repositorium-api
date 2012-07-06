@@ -28,6 +28,17 @@ class UsersMySqlDAO implements UsersDAO{
 		return $this->executeInsert($sqlQuery);
 	}
 	
+	public function disjoinRepository($repo_id, $user_id){
+		$sql = "DELETE FROM repositories_users ".
+				"WHERE  repository_id = ? AND user_id = ?";
+	
+		$sqlQuery = new SqlQuery($sql);
+		$sqlQuery->setNumber($repo_id);
+		$sqlQuery->setNumber($user_id);
+	
+		return $this->execute($sqlQuery);
+	}
+	
 	public function isAdmin($user_id){
 		$sql = "SELECT is_administrator FROM repo.users WHERE id = ?";
 		$sqlQuery = new SqlQuery($sql);

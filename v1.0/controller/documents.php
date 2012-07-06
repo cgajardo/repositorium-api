@@ -94,8 +94,26 @@ class Documents{
 		if(isset($_PUT['']))
 			$Document->content = $_PUT['title'];
 		
-		DAOFactory::getDocumentsDAO()->update($Document);
+		return DAOFactory::getDocumentsDAO()->update($Document);
 		
+		
+	}
+	
+	public function delete($repo_id){
+		//trying to bypass PHP missing support for PUT and DELETE
+		$_DELETE = array();
+		parse_str(file_get_contents('php://input'), $_DELETE);
+		$User = getSession()->get('user');
+		
+		if(!$User->isAdmin($repo_id))
+			return returnError('401 Unauthorized','Only admin users can perform this action');
+		
+		$Document = DAOFactory::getDocumentsDAO()->load($_DELETE['id']);
+		
+		if($Document == null)
+			return returnError('401 Unauthorized','Document does not exist, try creating a new document');
+		
+		return DAOFactory::getDocumentsDAO()->inactive($Document->id);
 		
 	}
 }

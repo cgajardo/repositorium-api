@@ -8,6 +8,14 @@ class DocumentsMySqlDAO implements DocumentsDAO{
 
 /** Public functions **/
 	
+	public function inactive($document_id){
+		$sql = "UPDATE documents SET active = 0 WHERE id = ?";
+		$sqlQuery = new SqlQuery($sql);
+		$sqlQuery->setNumber($document_id);
+		
+		return $this->executeUpdate($sqlQuery);
+	}
+	
 	public function update($Document){
 		$sql = "UPDATE documents SET title = ?, content = ? WHERE id = ?";
 		
@@ -16,7 +24,7 @@ class DocumentsMySqlDAO implements DocumentsDAO{
 		$sqlQuery->setString($Document->content);
 		$sqlQuery->setString($Document->id);
 		
-		$this->executeUpdate($sqlQuery);
+		return $this->executeUpdate($sqlQuery);
 	}
 	
 	public function insert($Document, $repo_id){

@@ -37,6 +37,10 @@ class Repositories{
 		return $stat->toArray();
 	}
 	
+	public static function showTags($id){
+		return DAOFactory::getRepositoriesDAO()->getTags($id);
+	}
+	
 	
 	public static function showUsers($id){
 		$users = DAOFactory::getUsersDAO()->getByRepositoryId($id);
@@ -100,6 +104,15 @@ class Repositories{
 		foreach ($criterion as $criteria){
 			DAOFactory::getUsersDAO()->asociateCriteria($User->id, $criteria);
 		}
+	}
+	
+	public function disjoin($id){
+		$User = getSession()->get('user');
+		//there's no user in session
+		if($User == null)
+			return returnError('401 Unauthorized','User must be logged in');
+		
+		return DAOFactory::getUsersDAO()->disjoinRepository($id, $User->id);
 		
 	}
 
