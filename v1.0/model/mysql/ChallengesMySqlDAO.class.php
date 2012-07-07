@@ -110,7 +110,7 @@ class ChallengesMySqlDAO implements ChallengesDAO{
 	
 	public function getCorrectAnswer($criteria_id, $doc_id){
 		$sql = "SELECT official_answer ".
-				"FROM repo.criterias_documents ".
+				"FROM criterias_documents ".
 				"WHERE criteria_id = ? AND document_id = ?";
 		
 		$sqlQuery = new SqlQuery($sql);
