@@ -73,8 +73,10 @@ class Repositories{
 			foreach ($documents as $documents){
 				unset($documents->id);
 			}
-			
-			DAOFactory::getUsersDAO()->substractPoints($id, $User->id);
+
+			//if search returns documents, then substract points
+			if($documents!=null)
+				DAOFactory::getUsersDAO()->substractPoints($id, $User->id);
 			
 			//returns a list of documents resulting from the search query
 			return $documents;
@@ -83,6 +85,8 @@ class Repositories{
 		}else{
 			//put query on session to search when user answers question
 			getSession()->set("search_query", $query);
+			if(isset($_GET['fields']))
+				getSession()->set("fields", $_GET['fields']);
 			
 			$challenges = DAOFactory::getChallengesDAO()->getChallenges($id,$User->id);
 			

@@ -27,11 +27,11 @@ class Challenges{
 		}
 		//usually after a search
 		$query = getSession()->get("search_query");
-		if($query!=null){
-			//try to perform the querry again
-			Repositories::search($repo_id, $query);
+		$fields = getSession()->get("fields");
+		if($fields != null)
+			$_GET['fields'] = $fields;
 			
-		}
+		return Repositories::search($repo_id, $query);
 	}
 	
 	
