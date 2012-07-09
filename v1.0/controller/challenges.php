@@ -28,7 +28,9 @@ class Challenges{
 		}
 		//usually after a search
 		$query = getSession()->get("search_query");
+		session_unset("search_query");
 		$fields = getSession()->get("fields");
+		session_unset("fields");
 		if($fields != null)
 			$_GET['fields'] = $fields;
 			
