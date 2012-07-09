@@ -15,12 +15,13 @@ class Challenges{
 		$challengeData = getSession()->get($idChallenge);
 		$realIdChallenge = $challengeData['idcriteria'];
 		unset($challengeData['idcriteria']);
+		
 		foreach ($challengeData as $key => $docID){
 			$userAnswer = $_POST[$key];
 			if($userAnswer=='a'){
 				DAOFactory::getChallengesDAO()->updateVoteA($repo_id, $realIdChallenge, $docID, $User->id);
 			}elseif($userAnswer=='b'){
-				DAOFactory::getChallengesDAO()->updateVoteB($repo_id, $realIdChallengem, $docID, $User->id);
+				DAOFactory::getChallengesDAO()->updateVoteB($repo_id, $realIdChallenge, $docID, $User->id);
 			}else{
 				return returnError('409 Conflict','You must provide an answer for document with id '.$key);
 			}

@@ -72,6 +72,24 @@ class DocumentsMySqlDAO implements DocumentsDAO{
 			}
 		
 		}
+		
+		$this->massCreateAfterDocument($id, $repo_id);
+	}
+	
+	private function massCreateAfterDocument($doc_id, $repo_id){
+		$sql = "SELECT id FROM criterias WHERE repository_id = ?";
+		$sqlQuery = new SqlQuery($sql);
+		$sqlQuery->setNumber($repo_id);
+		
+		$tab = QueryExecutor::execute($sqlQuery);
+		for($i=0;$i<count($tab);$i++){
+			$sql = "INSERT INTO criterias_documents(document_id, criteria_id, total_answers_1, total_answers_2, validated, challengeable) ".
+					"VALUES(?,?,0,0,0,1)";
+			$sqlQuery = new SqlQuery($sql);
+			$sqlQuery->setNumber($doc_id);
+			$sqlQuery->setNumber($tab[$i]['id']);
+			$this->executeInsert($sqlQuery);
+		}
 	}
 	
 	public function load($document_id){

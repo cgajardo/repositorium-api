@@ -160,7 +160,7 @@ class ChallengesMySqlDAO implements ChallengesDAO{
 		if($documents == null){
 			$Error = new Error();
 			$Error->status = "500 Internal Server Error";
-			$Error->message = "There aren't enough documents to play a challenge.";
+			$Error->message = "There aren't enough documents to play a challenge. Please contact repository admin.";
 			return $Error;
 		}
 		
