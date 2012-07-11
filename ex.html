@@ -19,15 +19,6 @@
   </head>
   <body>
 
-      <div id="header">
-        <nav>
-          <li class="fork"><a href="https://github.com/cgajardo/repositorium-api">Fork On GitHub</a></li>
-          <li class="downloads"><a href="https://github.com/cgajardo/repositorium-api/zipball/master">ZIP</a></li>
-          <li class="downloads"><a href="https://github.com/cgajardo/repositorium-api/tarball/master">TAR</a></li>
-          <li class="title">DOWNLOADS</li>
-        </nav>
-      </div><!-- end header -->
-
     <div class="wrapper">
 
       <section>
@@ -56,6 +47,10 @@
 			        <tr>
 			        	<td>URL</td>
 			        	<td>/repositories</td>
+			        </tr>
+			        <tr>
+			        	<td>Params</td>
+			        	<td>-</td>
 			        </tr>
 			        <tr>
 			        	<td>Call example</td>
@@ -91,6 +86,10 @@
 			        	<td>/repositories/_id</td>
 			        </tr>
 			        <tr>
+			        	<td>Params</td>
+			        	<td>-</td>
+			        </tr>
+			        <tr>
 			        	<td>Call example</td>
 			        	<td><font face="monospace">
 			        	String url = "http://repositorium.cl/api/v1.0/repositories/20";<br>
@@ -124,6 +123,10 @@
 			        	<td>/repositories/_id/stats</td>
 			        </tr>
 			        <tr>
+			        	<td>Params</td>
+			        	<td>-</td>
+			        </tr>
+			        <tr>
 			        	<td>Call example</td>
 			        	<td><font face="monospace">
 			        	String url = "http://repositorium.cl/api/v1.0/repositories/20";<br>
@@ -142,6 +145,129 @@
 		        </table>
 			</div>
 			
+			<div id="repousers">
+		        <table>
+			        <tr>
+		        		<th>Resource</th>
+		        		<th>Repository users</th>
+			        </tr>
+		        	<tr>
+		        		<td>Method</td>
+		        		<td>GET</td>
+			        </tr>
+			        <tr>
+			        	<td>URL</td>
+			        	<td>/repositories/_id/users</td>
+			        </tr>
+			        <tr>
+			        	<td>Params</td>
+			        	<td>-</td>
+			        </tr>
+			        <tr>
+			        	<td>Call example</td>
+			        	<td><font face="monospace">
+			        	String url = "http://repositorium.cl/api/v1.0/repositories/20/users";<br>
+			        	HttpGet httpGet = new HttpGet(url);<br>
+			        	HTTPResponse reponse = httpClient.execute(httpGet);<br>
+			        	String responseBody = EntityUtils.toString(response.getEntity());<br>
+			        	</font></td>
+			        </tr>
+			        <tr>
+			        	<td>Response example</td>
+			        	<td>responseBody should look like this:<br>
+			        	<font face="monospace">
+			        	[{"id":"1","email":"annonymous","name":"annonymous","lastname":"annonymous","created":"2011-06-23 15:54:33","active":"1"},{"id":"2","email":"admin@example.com","name":"admin","lastname":"user","created":"2011-06-23 15:55:17","active":"1"}, {"id":"9","email":"cgajardo@litmon.com","name":"carlos","lastname":"gajardo","created":"2011-09-25 20:26:51","active":"1"}]
+			        	</font></td>
+			        </tr>
+		        </table>
+			</div>
+			
+			<div id="reposearch">
+		        <table>
+			        <tr>
+		        		<th>Resource</th>
+		        		<th>Search on a Repository</th>
+			        </tr>
+		        	<tr>
+		        		<td>Method</td>
+		        		<td>GET</td>
+			        </tr>
+			        <tr>
+			        	<td>URL</td>
+			        	<td>/repositories/_id/search:_query</td>
+			        </tr>
+			        <tr>
+			        	<td>Params</td>
+			        	<td>fields:tags|title|content</td>
+			        </tr>
+			        <tr>
+			        	<td>Call example</td>
+			        	<td><font face="monospace">
+			        	String url = "http://repositorium.cl/api/v1.0/repositories/20/search:manzana";<br>
+			        	String params = "fields=title";
+			        	HttpGet httpGet = new HttpGet(url+"?"+params);<br>
+			        	HTTPResponse reponse = httpClient.execute(httpGet);<br>
+			        	String responseBody = EntityUtils.toString(response.getEntity());<br>
+			        	</font></td>
+			        </tr>
+			        <tr>
+			        	<td>Response example</td>
+			        	<td>responseBody would depend on weather users has enough points to download a document or not. On the first case it will return a document:<br>
+			        	<font face="monospace">
+			        	{"title":"manzana","content":"Awesome fruit","author":{"email":"cgajardo@litmon.com","name":"carlos","lastname":"gajardo","created":"2011-09-25 20:26:51","active":"1"},"created":"2012-05-10 11:35:37","files":[],"tags":["fruta","casera"]}
+			        	</font><br>
+			        	On the second case, it will return a challenge:<br>
+			        	<font face="monospace">
+			        	{"id":"1f0e3dad9","question":"Es esto un alimento?","documents":[{"id":1,"title":"pizza","content":"Super awesome meal","author":{"email":"cgajardo@litmon.com","name":"carlos","lastname":"gajardo","created":"2011-09-25 20:26:51","active":"1"},"created":"2012-07-09 00:59:17","files":[],"tags":[]}],"answera":"No","answerb":"Yes"}
+			        	</font>
+			        	</td>
+			        </tr>
+		        </table>
+			</div>
+			
+			
+			<div id="loaddocument">
+		        <table>
+			        <tr>
+		        		<th>Resource</th>
+		        		<th>Load a document</th>
+			        </tr>
+		        	<tr>
+		        		<td>Method</td>
+		        		<td>GET</td>
+			        </tr>
+			        <tr>
+			        	<td>URL</td>
+			        	<td>/repositories/_id/documents</td>
+			        </tr>
+			        <tr>
+			        	<td>Params</td>
+			        	<td>id:_id</td>
+			        </tr>
+			        <tr>
+			        	<td>Call example</td>
+			        	<td><font face="monospace">
+			        	String url = "http://repositorium.cl/api/v1.0/repositories/20/documents";<br>
+			        	String params = "id=285";
+			        	HttpGet httpGet = new HttpGet(url+"?"+params);<br>
+			        	HTTPResponse reponse = httpClient.execute(httpGet);<br>
+			        	String responseBody = EntityUtils.toString(response.getEntity());<br>
+			        	</font></td>
+			        </tr>
+			        <tr>
+			        	<td>Response example</td>
+			        	<td>responseBody would depend on weather user has rol admin or not. On the first case it will return a document:<br>
+			        	<font face="monospace">
+			        	{"id":"285","title":"frambuesa","content":"No so awesome fruit","author":{"email":"cgajardo@litmon.com","name":"carlos","lastname":"gajardo","created":"2011-09-25 20:26:51","active":"1"},"created":"2012-05-10 11:49:06","files":[],"tags":["fruta"]}
+			        	</font><br>
+			        	On the second case, it will return with and error:<br>
+			        	<font face="monospace">
+			        	{"status":"401 Unauthorized","message":"This action can only be performed by admin users"}
+			        	</font>
+			        	</td>
+			        </tr>
+		        </table>
+			</div>
 			
 			
 	</div>

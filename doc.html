@@ -72,18 +72,18 @@
 		        </tr>
 		        <tr>
 		        	<td>GET</td>
-		        	<td><a href="#repository">/repositories/_id/users</a></td>
+		        	<td><a href="ex.html#repousers">/repositories/_id/users</a></td>
 		        	<td>Returns a list of users subscribed to repository with ID _id</td>
 		        </tr>
 		        <tr>
 		        	<td>GET</td>
-		        	<td><a href="#repository">/repositories/_id/search:_query<br>[fields:tags|title|content]</a></td>
+		        	<td><a href="ex.html#reposearch">/repositories/_id/search:_query<br>[fields:tags|title|content]</a></td>
 		        	<td>If current users can afford for this download this method will retun a list of documents, otherwise
 		        	it'll return a list of challenges. If no field is declared then search will consider all fields</td>
 		        </tr>
 		        <tr>
 		        	<td>GET</td>
-		        	<td><a href="#repository">/repositories/_id/documents<br>{id:_id}</a></td>
+		        	<td><a href="ex.html#loaddocument">/repositories/_id/documents<br>{id:_id}</a></td>
 		        	<td>If user in session is admin for this repository, returns document with ID _id data, otherwise returns error 401 Unauthorized.</td>
 		        </tr>
 		        <tr>
