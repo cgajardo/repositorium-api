@@ -1,0 +1,135 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Repositorium API by cgajardo</title>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="javascripts/respond.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!--[if lt IE 8]>
+    <link rel="stylesheet" href="stylesheets/ie.css">
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+  </head>
+  <body>
+
+      <div id="header">
+        <nav>
+          <li class="fork"><a href="https://github.com/cgajardo/repositorium-api">Fork On GitHub</a></li>
+          <li class="downloads"><a href="https://github.com/cgajardo/repositorium-api/zipball/master">ZIP</a></li>
+          <li class="downloads"><a href="https://github.com/cgajardo/repositorium-api/tarball/master">TAR</a></li>
+          <li class="title">DOWNLOADS</li>
+        </nav>
+      </div><!-- end header -->
+
+    <div class="wrapper">
+
+      <section>
+        <div id="title">
+          <h1>Examples</h1>
+          <p>This page shows examples of usage.</p>
+          <hr>
+          <span class="credits left">Project maintained by <a href="https://github.com/cgajardo">cgajardo</a></span>
+          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="http://twitter.com/#!/michigangraham">mattgraham</a></span>
+        </div>
+		
+		<div id="examples">
+	        <h2>List of Examples</h2>
+	        <p>This page shows examples for every resource available, to see a list of resources go to <a href="doc.html">documentation</a>.
+	        Examples use Java snippets, specially usefull when working on Android platform.</p>
+	        <div id="listrepos">
+		        <table>
+			        <tr>
+		        		<th>Resource</th>
+		        		<th>List all Repositories</th>
+			        </tr>
+		        	<tr>
+		        		<td>Method</td>
+		        		<td>GET</td>
+			        </tr>
+			        <tr>
+			        	<td>URL</td>
+			        	<td>/repositories</td>
+			        </tr>
+			        <tr>
+			        	<td>Call example</td>
+			        	<td><font face="monospace">
+			        	String url = "http://repositorium.cl/api/v1.0/repositories";<br>
+			        	HttpGet httpGet = new HttpGet(url);<br>
+			        	HTTPResponse reponse = httpClient.execute(httpGet);<br>
+			        	String responseBody = EntityUtils.toString(response.getEntity());<br>
+			        	</font></td>
+			        </tr>
+			        <tr>
+			        	<td>Response example</td>
+			        	<td>responseBody should look like this:<br>
+			        	<font face="monospace">
+			        	{"id":"20","name":"Fondue","description":"This repository contains stimations of nutricional facts for food.","author":{"email":"cgajardo@litmon.com","name":"carlos","lastname":"gajardo","created":"2011-09-25 20:26:51","active":"1"},"active":"1"},{"id":"21","name":"benchmark","description":"benchmark for carlos engineering thesis","author":{"email":"cgajardo@litmon.com","name":"carlos","lastname":"gajardo","created":"2011-09-25 20:26:51","active":"1"},"active":"1"}]
+			        	</font></td>
+			        </tr>
+		        </table>
+			</div>
+			
+			
+			<div id="user">
+		        <h3>User</h3>
+		        <p>The User element contains the basis information about user</p>
+		        <h5>properties</h5>
+		        <table>
+			        <tr>
+		        		<th>Property</th>
+		        		<th>Description</th>
+			        </tr>
+		        	<tr>
+		        		<td>id</td>
+		        		<td>It's the identifier of a user</td>
+			        </tr>
+			        <tr>
+			        	<td>email</td>
+			        	<td>User email, this is also the username for login</td>
+			        </tr>
+			        <tr>
+			        	<td>name</td>
+			        	<td>User name</td>
+			        </tr>
+			        <tr>
+			        	<td>lastaname</td>
+			        	<td>User lastname</td>
+			        </tr>
+			        <tr>
+			        	<td>created</td>
+			        	<td>Indicates the date when user joined Repositorium</td>
+			        </tr>
+			        <tr>
+			        	<td>active</td>
+			        	<td>Indicates whether this user is active or not. Posibles values are <b>0</b> for inactive and <b>1</b> for active</td>
+			        </tr>
+		        </table>
+			</div>
+			
+			
+	</div>
+
+
+
+<h3>Authors and Contributors</h3>
+
+<p>You can <a href="https://github.com/blog/821" class="user-mention">@mention</a> a GitHub username to generate a link to their profile. The resulting <code>&lt;a&gt;</code> element will link to the contributor's GitHub Profile. For example: In 2007, Chris Wanstrath (
+<a href="https://github.com/defunkt" class="user-mention">@defunkt</a>), PJ Hyett (<a href="https://github.com/pjhyett" class="user-mention">@pjhyett</a>), and Tom Preston-Werner (<a href="https://github.com/mojombo" class="user-mention">@mojombo</a>) founded GitHub.</p>
+
+<h3>Support or Contact</h3>
+
+<p>Have a question? send me a tweet to <a href="http://www.twitter.com/cgajardo_">@cgajardo_</a> and I’ll try help you sort it out.</p>
+      </section>
+
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><!--<![endif]-->
+    
+  </body>
+</html>
