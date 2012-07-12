@@ -32,8 +32,8 @@
 
       <section>
         <div id="title">
-          <h1>Documentation</h1>
-          <p>An API for Repositorium aimed to develop mobile applications </p>
+          <h1>Elements</h1>
+          <p>This page shows the elements used in this API</p>
           <hr>
           <span class="credits left">Project maintained by <a href="https://github.com/cgajardo">cgajardo</a></span>
           <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="http://twitter.com/#!/michigangraham">mattgraham</a></span>
@@ -41,7 +41,7 @@
 		
 		<div id="elements">
 	        <h2>List of Elements</h2>
-	        <p>This page shows every element available and its representation, to see a list of available functio go to <a href="doc.html">documentation</a></p>
+	        <p>This page shows every element available and its representation using JSON, to see a list of available functio go to <a href="doc.html">documentation</a> or go to <a href="ex.html">here</a> to see a list of examples.</p>
 	        <div id="repository">
 		        <h3>Repository</h3>
 		        <p>A repository is the main element in Repositorium, it represents a community of users
@@ -71,6 +71,10 @@
 			        <tr>
 			        	<td>active</td>
 			        	<td>Indicates whether this repository is active or not. Posibles values are <b>0</b> for inactive and <b>1</b> for active</td>
+			        </tr>
+			        <tr>
+			        	<td>Example</td>
+			        	<td>"id":"20","name":"Fondue","description":"This repository contains stimations of nutricional facts for food.","author":<a href="#user">user</a>,"active":"1"}</td>
 			        </tr>
 		        </table>
 			</div>
@@ -109,6 +113,10 @@
 			        	<td>active</td>
 			        	<td>Indicates whether this user is active or not. Posibles values are <b>0</b> for inactive and <b>1</b> for active</td>
 			        </tr>
+			        <tr>
+			        	<td>Example</td>
+			        	<td>{"id":"9","email":"cgajardo@litmon.com","name":"carlos","lastname":"gajardo","created":"2011-09-25 20:26:51","active":"1"}</td>
+			        </tr>
 		        </table>
 			</div>
 			
@@ -140,6 +148,10 @@
 			        <tr>
 			        	<td>answerb</td>
 			        	<td>Option B for answering the question. User must decide between this option, or A</td>
+			        </tr>
+			        <tr>
+			        	<td>Example</td>
+			        	<td>{"id":"1f0e3dad9","question":"Es esto un alimento?","documents":[<a href="#document">documents</a>],"answera":"No","answerb":"Yes"}</td>
 			        </tr>
 		        </table>
 			</div>
@@ -183,6 +195,10 @@
 			        	<td>tags</td>
 			        	<td>Array of tags that describe the document.</td>
 			        </tr>
+			        <tr>
+			        	<td>Example</td>
+			        	<td>{"id":"274","title":"manzana","content":"Awesome fruit","author":<a href="#user">user</a>,"created":"2012-05-10 11:35:37","files":[],"tags":["fruta","casera"]}</td>
+			        </tr>
 		        </table>
 			</div>
 			
@@ -207,6 +223,10 @@
 			        	<td>criterion</td>
 			        	<td>Number of criterion in a given repository.</td>
 			        </tr>
+			        <tr>
+			        	<td>Example</td>
+			        	<td>{"users":"8","documents":"25","criterion":"3"}</td>
+			        </tr>
 		        </table>
 			</div>
 			
@@ -226,6 +246,10 @@
 			        <tr>
 			        	<td>message</td>
 			        	<td>Brief explanation of the error.</td>
+			        </tr>
+			        <tr>
+			        	<td>Example</td>
+			        	<td>{"status":"401 Unauthorized","message":"User must be logged in"}</td>
 			        </tr>
 		        </table>
 			</div>
