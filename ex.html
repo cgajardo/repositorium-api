@@ -198,7 +198,7 @@
 			        </tr>
 			        <tr>
 			        	<td>Params</td>
-			        	<td>fields:tags|title|content</td>
+			        	<td>fields:tags|title|content (optional)</td>
 			        </tr>
 			        <tr>
 			        	<td>Call example</td>
@@ -242,7 +242,7 @@
 			        </tr>
 			        <tr>
 			        	<td>Params</td>
-			        	<td>id:_id</td>
+			        	<td>id:_id (mandatory)</td>
 			        </tr>
 			        <tr>
 			        	<td>Call example</td>
@@ -260,10 +260,91 @@
 			        	<font face="monospace">
 			        	{"id":"285","title":"frambuesa","content":"No so awesome fruit","author":{"email":"cgajardo@litmon.com","name":"carlos","lastname":"gajardo","created":"2011-09-25 20:26:51","active":"1"},"created":"2012-05-10 11:49:06","files":[],"tags":["fruta"]}
 			        	</font><br>
-			        	On the second case, it will return with and error:<br>
+			        	On the second case, it will return with an error:<br>
 			        	<font face="monospace">
 			        	{"status":"401 Unauthorized","message":"This action can only be performed by admin users"}
 			        	</font>
+			        	</td>
+			        </tr>
+		        </table>
+			</div>
+			
+			<div id="randomdocument">
+		        <table>
+			        <tr>
+		        		<th>Resource</th>
+		        		<th>Load a random document</th>
+			        </tr>
+		        	<tr>
+		        		<td>Method</td>
+		        		<td>GET</td>
+			        </tr>
+			        <tr>
+			        	<td>URL</td>
+			        	<td>/repositories/_id/document/random</td>
+			        </tr>
+			        <tr>
+			        	<td>Params</td>
+			        	<td>-</td>
+			        </tr>
+			        <tr>
+			        	<td>Call example</td>
+			        	<td><font face="monospace">
+			        	String url = "http://repositorium.cl/api/v1.0/repositories/20/documents/random";<br>
+			        	HttpGet httpGet = new HttpGet(url);<br>
+			        	HTTPResponse reponse = httpClient.execute(httpGet);<br>
+			        	String responseBody = EntityUtils.toString(response.getEntity());<br>
+			        	</font></td>
+			        </tr>
+			        <tr>
+			        	<td>Response example</td>
+			        	<td>responseBody would depend on weather user has rol admin or not. On the first case it will return a document:<br>
+			        	<font face="monospace">
+			        	{"id":"285","title":"frambuesa","content":"No so awesome fruit","author":{"email":"cgajardo@litmon.com","name":"carlos","lastname":"gajardo","created":"2011-09-25 20:26:51","active":"1"},"created":"2012-05-10 11:49:06","files":[],"tags":["fruta"]}
+			        	</font><br><br>
+			        	On the second case, it will return with an error:<br>
+			        	<font face="monospace">
+			        	{"status":"401 Unauthorized","message":"This action can only be performed by admin users"}
+			        	</font>
+			        	</td>
+			        </tr>
+		        </table>
+			</div>
+			
+			<div id="getchallenge">
+		        <table>
+			        <tr>
+		        		<th>Resource</th>
+		        		<th>Get a Challenge</th>
+			        </tr>
+		        	<tr>
+		        		<td>Method</td>
+		        		<td>GET</td>
+			        </tr>
+			        <tr>
+			        	<td>URL</td>
+			        	<td>/repositories/_id/challenges</td>
+			        </tr>
+			        <tr>
+			        	<td>Params</td>
+			        	<td>-</td>
+			        </tr>
+			        <tr>
+			        	<td>Call example</td>
+			        	<td><font face="monospace">
+			        	String url = "http://repositorium.cl/api/v1.0/repositories/20/challenges";<br>
+			        	HttpGet httpGet = new HttpGet(url);<br>
+			        	HTTPResponse reponse = httpClient.execute(httpGet);<br>
+			        	String responseBody = EntityUtils.toString(response.getEntity());<br>
+			        	</font></td>
+			        </tr>
+			        <tr>
+			        	<td>Response example</td>
+			        	<td>responseBody should look like this:<br>
+			        	<font face="monospace">
+			        	{"id":"1f0e3dad9","question":"Es esto un alimento?","documents":[{"id":1,"title":"pizza","content":"Super awesome meal","author":{"email":"cgajardo@litmon.com","name":"carlos","lastname":"gajardo","created":"2011-09-25 20:26:51","active":"1"},"created":"2012-07-09 00:59:17","files":[],"tags":[]}],"answera":"No","answerb":"Yes"}
+			        	</font><br><br>
+			        	Note: take a look at the challenge id and documents id, you will use them when submitting an answer for this challenge.
 			        	</td>
 			        </tr>
 		        </table>
