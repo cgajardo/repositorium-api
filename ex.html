@@ -205,7 +205,7 @@
 			        	<td>Call example</td>
 			        	<td><font face="monospace">
 			        	String url = "http://repositorium.cl/api/v1.0/repositories/20/search:manzana";<br>
-			        	String params = "fields=title";
+			        	String params = "fields=title";<br>
 			        	HttpGet httpGet = new HttpGet(url+"?"+params);<br>
 			        	HTTPResponse reponse = httpClient.execute(httpGet);<br>
 			        	String responseBody = EntityUtils.toString(response.getEntity());<br>
@@ -249,7 +249,7 @@
 			        	<td>Call example</td>
 			        	<td><font face="monospace">
 			        	String url = "http://repositorium.cl/api/v1.0/repositories/20/documents";<br>
-			        	String params = "id=285";
+			        	String params = "id=285";<br>
 			        	HttpGet httpGet = new HttpGet(url+"?"+params);<br>
 			        	HTTPResponse reponse = httpClient.execute(httpGet);<br>
 			        	String responseBody = EntityUtils.toString(response.getEntity());<br>
@@ -346,6 +346,45 @@
 			        	{"id":"1f0e3dad9","question":"Es esto un alimento?","documents":[{"id":1,"title":"pizza","content":"Super awesome meal","author":{"email":"cgajardo@litmon.com","name":"carlos","lastname":"gajardo","created":"2011-09-25 20:26:51","active":"1"},"created":"2012-07-09 00:59:17","files":[],"tags":[]}],"answera":"No","answerb":"Yes"}
 			        	</font><br><br>
 			        	Note: take a look at the challenge id and documents id, you will use them when submitting an answer for this challenge.
+			        	</td>
+			        </tr>
+		        </table>
+			</div>
+			
+			<div id="joinrepo">
+		        <table>
+			        <tr>
+		        		<th>Resource</th>
+		        		<th>Join a Respository</th>
+			        </tr>
+		        	<tr>
+		        		<td>Method</td>
+		        		<td>POST</td>
+			        </tr>
+			        <tr>
+			        	<td>URL</td>
+			        	<td>/repositories/_id/join</td>
+			        </tr>
+			        <tr>
+			        	<td>Params</td>
+			        	<td>-</td>
+			        </tr>
+			        <tr>
+			        	<td>Prerequisites</td>
+			        	<td>Users must be logged in.</td>
+			        </tr>
+			        <tr>
+			        	<td>Call example</td>
+			        	<td><font face="monospace">
+			        	String url = "http://repositorium.cl/api/v1.0/repositories/20/join";<br>
+			        	HttpPost httpPost = new HttpPost(url);<br>
+			        	HTTPResponse reponse = httpClient.execute(httpPost);<br>
+			        	String responseBody = EntityUtils.toString(response.getEntity());<br>
+			        	</font></td>
+			        </tr>
+			        <tr>
+			        	<td>Response example</td>
+			        	<td>This resource returns "OK" if everything went well, otherwise it returns an error.<br>
 			        	</td>
 			        </tr>
 		        </table>
