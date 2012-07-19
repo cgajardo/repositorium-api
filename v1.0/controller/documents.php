@@ -91,8 +91,8 @@ class Documents{
 		if(isset($_PUT['title']))	
 			$Document->title = $_PUT['title'];
 		
-		if(isset($_PUT['']))
-			$Document->content = $_PUT['title'];
+		if(isset($_PUT['content']))
+			$Document->content = $_PUT['content'];
 		
 		return DAOFactory::getDocumentsDAO()->update($Document);
 		
